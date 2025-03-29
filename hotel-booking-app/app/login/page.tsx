@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Dog } from "lucide-react";
 import { useAuth } from "../../components/auth-provider";
 import { useSearchParams } from "next/navigation";
+// import Home from "@/app/home/page"/
 
 const AuthPageContent = () => {
   const { logIn, signUp } = useAuth();
@@ -60,7 +61,7 @@ const AuthPageContent = () => {
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-b from-gray-200 to-gray-400">
       <Link
-        href="/"
+        href="/Home"
         className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center gap-2"
       >
         <Dog className="h-6 w-6" />
@@ -75,7 +76,7 @@ const AuthPageContent = () => {
             {isLogin ? "Sign in to your account" : "Create a new account"}
           </p>
         </div>
-
+{/* <Home/> */}
         <div className="w-full">
           <div className="grid w-full grid-cols-2 border-b">
             <button

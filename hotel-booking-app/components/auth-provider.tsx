@@ -42,7 +42,7 @@ export function AuthActionsProvider({ children }: { children: React.ReactNode })
         email,
         password,
         redirect: true,
-        callbackUrl: "/",
+        callbackUrl: "/home",
       });
 
       if (res?.error) {
