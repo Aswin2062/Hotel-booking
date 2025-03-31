@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import { AuthProvider } from "../components/auth-provider"
 
 import './globals.css';
+import Navbar from "./navbar";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -17,6 +18,9 @@ export default function RootLayout({
       <body className={inter.className}>
           <AuthProvider>
             <div className="flex min-h-screen flex-col">
+               <div>
+        <Navbar />
+      </div>
               <main className="flex-1">{children}</main>
             </div>
           </AuthProvider>

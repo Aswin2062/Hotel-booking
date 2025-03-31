@@ -1,8 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { FaSearch, FaUser, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaSearch,
+  FaUser,
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import CardDetails from "../card";
+import Navbar from "../navbar";
+import BgImage from "@/public/vacation.jpg";
+import Category from "../category";
 
 const HomePage = () => {
   const [location, setLocation] = useState("");
@@ -10,19 +18,27 @@ const HomePage = () => {
   const [travelers, setTravelers] = useState(2);
 
   return (
-    <div className="relative h-screen">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url('/your-image-path.jpg')` }}
-      />
-      <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+    <div className="">
+      <div>
+        <Navbar />
+      </div>
 
-      <div className="relative flex flex-col items-center justify-center h-full text-white">
-        <h1 className="text-3xl md:text-5xl font-semibold mb-6">
-          Relax, you’re booking a Vrbo
+      <div className="absolute inset-0 bg-cover bg-center" />
+
+      <div className="relative flex flex-col items-center justify-center h-[500px] "
+       style={{
+        backgroundImage: `url(${BgImage.src})`, // Use .src when using imported images in Next.js
+        backgroundSize: "cover",
+        backgroundPosition: "center", 
+      }}>
+        <div className="w-[70%] h-[100px] bg-white rounded-4xl flex items-center justify-center">
+
+        <h1 className="text-3xl md:text-4xl font-semibold text-black">
+          Relax, you’re booking a Hotel Finder
         </h1>
+        </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-lg flex flex-col md:flex-row gap-2 md:gap-4 w-full max-w-3xl">
+        <div className="bg-white rounded-xl p-4 shadow-lg flex flex-col md:flex-row gap-2 mt-4 md:gap-4 w-full max-w-3xl">
           <div className="flex items-center border rounded-lg px-3 py-2 w-full">
             <FaMapMarkerAlt className="text-gray-500 mr-2" />
             <input
@@ -59,13 +75,16 @@ const HomePage = () => {
             <FaSearch className="mr-2" /> Search
           </button>
         </div>
-       
       </div>
       <div>
-          <CardDetails/>
-        </div>
+      <Category/>
+      </div>
+
+      <div>
+        <CardDetails />
+      </div>
     </div>
   );
 };
 
-export default HomePage
+export default HomePage;

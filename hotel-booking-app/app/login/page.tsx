@@ -2,7 +2,7 @@
 
 import { useState, Suspense } from "react";
 import Link from "next/link";
-import { Dog } from "lucide-react";
+import {  Hotel } from "lucide-react";
 import { useAuth } from "../../components/auth-provider";
 import { useSearchParams } from "next/navigation";
 // import Home from "@/app/home/page"/
@@ -64,7 +64,7 @@ const AuthPageContent = () => {
         href="/Home"
         className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center gap-2"
       >
-        <Dog className="h-6 w-6" />
+        <Hotel className="h-6 w-6" />
         <span className="font-bold">Hotel Booking </span>
       </Link>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] border rounded-lg bg-white px-6 py-8 shadow-lg">
