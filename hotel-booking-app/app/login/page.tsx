@@ -60,13 +60,13 @@ const AuthPageContent = () => {
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-b from-gray-200 to-gray-400">
-      <Link
+      {/* <Link
         href="/Home"
         className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center gap-2"
       >
         <Hotel className="h-6 w-6" />
         <span className="font-bold">Hotel Booking </span>
-      </Link>
+      </Link> */}
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] border rounded-lg bg-white px-6 py-8 shadow-lg">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">

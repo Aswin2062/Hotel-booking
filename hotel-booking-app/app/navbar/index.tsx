@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/">
+        <Link href="/home">
           <span className="text-xl font-bold text-gray-800">HotelFinder</span>
         </Link>
 
@@ -26,18 +26,23 @@ const Navbar = () => {
           }`}
         >
           <li>
-            <Link href="/" className="block py-2 px-4 text-gray-700 hover:text-blue-500">
+            <Link href="/home" className="block py-2 px-4 text-gray-700 hover:text-blue-500">
               Home
             </Link>
           </li>
           <li>
-            <Link href="/about" className="block py-2 px-4 text-gray-700 hover:text-blue-500">
+            <Link href="/#" className="block py-2 px-4 text-gray-700 hover:text-blue-500">
               About
             </Link>
           </li>
           <li>
-            <Link href="/contact" className="block py-2 px-4 text-gray-700 hover:text-blue-500">
+            <Link href="/#" className="block py-2 px-4 text-gray-700 hover:text-blue-500">
               Contact
+            </Link>
+          </li>
+          <li>
+            <Link href="/editDetails" className="block py-2 px-4 text-gray-700 hover:text-blue-500 cursor-pointer">
+              Manage
             </Link>
           </li>
         </ul>

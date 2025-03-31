@@ -8,10 +8,9 @@ import { THotel } from "@/types/Json";
 
 const CardDetails = () => {
     const router = useRouter();
-    const [hotels, setHotels] = useState<THotel[]>([]); // State to prevent hydration mismatch
+    const [hotels, setHotels] = useState<THotel[]>([]);
 
     useEffect(() => {
-        // Set hotel data on the client side
         if (HotelJSON) {
             const hotelsWithDiscounts = HotelJSON.map(hotel => {
                 const discountPercentage = Math.floor(Math.random() * 21) + 10;
@@ -33,9 +32,9 @@ const CardDetails = () => {
 
     return (
         <div className="flex flex-col">
-            <h1 className="text-2xl font-bold mb-4 ml-4">Deals for the weekend</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-                {hotels?.map((hotel, index) => (
+            <h1 className="text-2xl font-bold mb-4 ml-[5rem] mt-[2rem]">Deals for the weekend</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[5rem] p-4 mx-[4%]">
+                {hotels.slice(0, 6).map((hotel, index) => (  // 🔹 Display only first 6 items
                     <div 
                         key={`${hotel.hotel_id}-${index}`} 
                         className="border rounded-lg shadow-lg overflow-hidden cursor-pointer"

@@ -5,6 +5,7 @@ import { AuthProvider } from "../components/auth-provider"
 
 import './globals.css';
 import Navbar from "./navbar";
+import Footer from "./footer";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,6 +23,9 @@ export default function RootLayout({
         <Navbar />
       </div>
               <main className="flex-1">{children}</main>
+              <div>
+              <Footer/>
+              </div>
             </div>
           </AuthProvider>
       </body>
