@@ -19,7 +19,22 @@ const Details = () => {
     useEffect(() => {
         if (country && state) {
             const hotelData: THotel[] = HotelJSON;
-            const filteredHotels = hotelData.filter(hotel => hotel.country === country && hotel.state === state);
+            const filteredHotels = hotelData
+                .filter(hotel => hotel.country === country && hotel.state === state)
+                .map(hotel => {
+                    const discountPercentage = hotel.discount || 0;
+                    const originalRate = hotel.rates_from || 100;
+                    const discountAmount = (originalRate * discountPercentage) / 100;
+                    const discountedRate = originalRate - discountAmount;
+
+                    return {
+                        ...hotel,
+                        discountPercentage,
+                        discountAmount,
+                        discountedRate
+                    };
+                });
+
             setHotels(filteredHotels);
         }
     }, [country, state]);
@@ -50,9 +65,21 @@ const Details = () => {
                             <h2 className="text-xl font-semibold">{hotel.hotel_name}</h2>
                             <p className="text-gray-600">{hotel.addressline1}, {hotel.city}</p>
                             <p className="text-yellow-500">⭐ {hotel.star_rating || "N/A"}</p>
-                            <p className="text-lg font-bold text-green-600">
-                                ${hotel.rates_from?.toFixed(2) || "N/A"} <span className="text-gray-500">/ night</span>
-                            </p>
+
+                            {/* Show discount details if available */}
+                            {hotel.discountPercentage > 0 ? (
+                                <div className="mt-2">
+                                    <p className="text-gray-500 line-through">${hotel.rates_from?.toFixed(2)}</p>
+                                    <p className="text-lg font-bold text-green-600">
+                                        ${hotel.discountedRate?.toFixed(2)} <span className="text-gray-500">/ night</span>
+                                    </p>
+                                    <p className="text-red-500 text-sm">
+                                        Save ${hotel.discountAmount?.toFixed(2)} ({hotel.discountPercentage}%)
+                                    </p>
+                                </div>
+                            ) : (
+                                <p className="text-lg font-bold text-black">${hotel.rates_from?.toFixed(2)} / night</p>
+                            )}
                         </div>
                     </div>
                 ))}

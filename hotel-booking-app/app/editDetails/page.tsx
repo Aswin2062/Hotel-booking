@@ -6,7 +6,7 @@ import { THotel } from "@/types/Json";
 import { FaEdit, FaPlus, FaSave, FaTimes } from "react-icons/fa";
 
 const EditDetails = () => {
-  const [hotels, setHotels] = useState<THotel[]>(HotelJSON);
+  const [hotels, setHotels] = useState<THotel[]>(HotelJSON.map((hotel, index) => ({ ...hotel, hotel_id: index + 1 })));
   const [editingHotel, setEditingHotel] = useState<THotel | null>(null);
   const [newHotel, setNewHotel] = useState<Partial<THotel>>({});
   const [isAdding, setIsAdding] = useState(false);
@@ -22,7 +22,9 @@ const EditDetails = () => {
   const handleAddNewHotel = () => {
     if (!newHotel.hotel_name || !newHotel.city) return;
     
-    const newId = Date.now();
+    // Ensure a unique hotel_id
+    const newId = Date.now() + Math.floor(Math.random() * 1000);
+    
     setHotels([...hotels, { ...newHotel, hotel_id: newId } as THotel]);
     setIsAdding(false);
     setNewHotel({});

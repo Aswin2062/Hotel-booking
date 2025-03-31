@@ -41,6 +41,6 @@ export type THotel = {
     number_of_reviews: number;
     rating_average: number;
     rates_currency: string;
-    
+    discount?:number;
   };
   

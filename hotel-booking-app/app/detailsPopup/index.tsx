@@ -3,118 +3,242 @@
 import { useState } from "react";
 import { THotel } from "@/types/Json";
 import Image from "next/image";
+import makePayment from "../../components/paymentService";
 
 interface DetailsPopupProps {
-    hotel: THotel;
-    onClose: () => void;
+  hotel: THotel;
+  onClose: () => void;
 }
 
 const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
-    const [bookingDetails, setBookingDetails] = useState({
-        checkIn: "",
-        checkOut: "",
-        guests: "1",
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-    });
+  const [bookingDetails, setBookingDetails] = useState({
+    checkIn: "",
+    checkOut: "",
+    guests: "1",
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setBookingDetails({ ...bookingDetails, [e.target.name]: e.target.value });
-    };
+  const hotelImages = [
+    hotel.photo1,
+    hotel.photo2,
+    hotel.photo3,
+    hotel.photo4,
+    hotel.photo5,
+  ].filter(Boolean); // Removes any undefined/null values
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        console.log("Booking Details:", bookingDetails);
-        alert("Booking Confirmed! Check console for details.");
-        onClose();
-    };
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setBookingDetails({ ...bookingDetails, [e.target.name]: e.target.value });
+  };
 
-    return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 sm:px-0">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl relative">
-                {/* Close Button */}
-                <button className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg" onClick={onClose}>
-                    ✖
-                </button>
+  // Calculate discounted price if a discount exists
+  const discountPercentage = hotel.discount || 0;
+  const originalRate = hotel.rates_from || 100;
+  const discountAmount = (originalRate * discountPercentage) / 100;
+  const discountedRate = originalRate - discountAmount;
 
-                {/* Hotel Details */}
-                <h2 className="text-xl sm:text-2xl font-bold mb-2 text-center">{hotel.hotel_name}</h2>
-                <p className="text-gray-600 text-center">{hotel.addressline1}, {hotel.city}, {hotel.country}</p>
-                
-                <div className="flex flex-col sm:flex-row gap-4 mt-4">
-                    {/* Hotel Image */}
-                    <div className="w-full sm:w-1/2">
-                        <Image 
-                            src={hotel.photo1 || "/default-hotel.jpg"} 
-                            alt={hotel.hotel_name} 
-                            width={400} 
-                            height={250} 
-                            className="w-full h-48 object-cover rounded-lg"
-                        />
-                        <p className="text-gray-500 text-center mt-2">From ${hotel.rates_from?.toFixed(2) || "N/A"} per night</p>
-                    </div>
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Booking Details:", bookingDetails);
+    await makePayment(bookingDetails, discountPercentage ? discountedRate : originalRate);
+    // alert("Booking Confirmed! Check console for details.");
+    onClose();
+  };
 
-                    {/* Booking Form */}
-                    <div className="w-full sm:w-1/2">
-                        <h3 className="text-lg font-semibold text-center sm:text-left">Room Booking</h3>
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 sm:px-0">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl relative">
+        {/* Close Button */}
+        <button
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
+          onClick={onClose}
+        >
+          ✖
+        </button>
 
-                        <form onSubmit={handleSubmit} className="mt-4 space-y-3">
-                            {/* Check-in & Check-out */}
-                            <div className="flex flex-col sm:flex-row gap-2">
-                                <div className="w-full">
-                                    <label className="block text-sm font-medium">Check-in Date</label>
-                                    <input type="date" name="checkIn" value={bookingDetails.checkIn} onChange={handleChange} required className="w-full p-2 border rounded-md" />
-                                </div>
-                                <div className="w-full">
-                                    <label className="block text-sm font-medium">Check-out Date</label>
-                                    <input type="date" name="checkOut" value={bookingDetails.checkOut} onChange={handleChange} required className="w-full p-2 border rounded-md" />
-                                </div>
-                            </div>
+        {/* Hotel Details */}
+        <h2 className="text-xl sm:text-2xl font-bold mb-2 text-center">
+          {hotel.hotel_name}
+        </h2>
+        <p className="text-gray-600 text-center">
+          {hotel.addressline1}, {hotel.city}, {hotel.country}
+        </p>
 
-                            {/* Guests Selection */}
-                            <div>
-                                <label className="block text-sm font-medium">Guests</label>
-                                <select name="guests" value={bookingDetails.guests} onChange={handleChange} className="w-full p-2 border rounded-md">
-                                    <option>1 Guest</option>
-                                    <option>2 Guests</option>
-                                    <option>3 Guests</option>
-                                    <option>4+ Guests</option>
-                                </select>
-                            </div>
+        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+          {/* Hotel Images Carousel */}
+          <div className="w-full sm:w-1/2">
+            {hotelImages.length > 0 ? (
+              <div className="grid grid-cols-2 gap-2">
+                {hotelImages.map((image, index) => (
+                  <Image
+                    key={index}
+                    src={image}
+                    alt={`${hotel.hotel_name} Image ${index + 1}`}
+                    width={200}
+                    height={150}
+                    className="w-full h-32 object-cover rounded-lg"
+                  />
+                ))}
+              </div>
+            ) : (
+              <Image
+                src="/default-hotel.jpg"
+                alt="Default Hotel"
+                width={400}
+                height={250}
+                className="w-full h-48 object-cover rounded-lg"
+              />
+            )}
 
-                            {/* User Details */}
-                            <div>
-                                <label className="block text-sm font-medium">Full Name</label>
-                                <input type="text" name="name" value={bookingDetails.name} onChange={handleChange} required className="w-full p-2 border rounded-md" placeholder="John Doe" />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium">Email</label>
-                                <input type="email" name="email" value={bookingDetails.email} onChange={handleChange} required className="w-full p-2 border rounded-md" placeholder="example@mail.com" />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium">Phone Number</label>
-                                <input type="tel" name="phone" value={bookingDetails.phone} onChange={handleChange} required className="w-full p-2 border rounded-md" placeholder="+1 234 567 890" />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium">Address</label>
-                                <input type="text" name="address" value={bookingDetails.address} onChange={handleChange} required className="w-full p-2 border rounded-md" placeholder="123 Main Street, City, Country" />
-                            </div>
-
-                            {/* Submit Button */}
-                            <button type="submit" className="w-full mt-3 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                                Confirm Booking
-                            </button>
-                        </form>
-                    </div>
+            {/* Price Section with Discount */}
+            <div className="text-center mt-2">
+              {discountPercentage > 0 ? (
+                <div>
+                  <p className="text-gray-500 line-through text-sm">
+                    ${originalRate.toFixed(2)}
+                  </p>
+                  <p className="text-lg font-bold text-green-600">
+                    ${discountedRate.toFixed(2)}{" "}
+                    <span className="text-gray-500">/ night</span>
+                  </p>
+                  <p className="text-red-500 text-sm">
+                    Save ${discountAmount.toFixed(2)} ({discountPercentage}%)
+                  </p>
                 </div>
+              ) : (
+                <p className="text-lg font-bold text-black">
+                  ${originalRate.toFixed(2)}{" "}
+                  <span className="text-gray-500">/ night</span>
+                </p>
+              )}
             </div>
+          </div>
+
+          {/* Booking Form */}
+          <div className="w-full sm:w-1/2">
+            <h3 className="text-lg font-semibold text-center sm:text-left">
+              Room Booking
+            </h3>
+
+            <form onSubmit={handleSubmit} className="mt-4 space-y-3">
+              {/* Check-in & Check-out */}
+              <div className="flex flex-col sm:flex-row gap-2">
+                <div className="w-full">
+                  <label className="block text-sm font-medium">
+                    Check-in Date
+                  </label>
+                  <input
+                    type="date"
+                    name="checkIn"
+                    value={bookingDetails.checkIn}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 border rounded-md"
+                  />
+                </div>
+                <div className="w-full">
+                  <label className="block text-sm font-medium">
+                    Check-out Date
+                  </label>
+                  <input
+                    type="date"
+                    name="checkOut"
+                    value={bookingDetails.checkOut}
+                    onChange={handleChange}
+                    required
+                    className="w-full p-2 border rounded-md"
+                  />
+                </div>
+              </div>
+
+              {/* Guests Selection */}
+              <div>
+                <label className="block text-sm font-medium">Guests</label>
+                <select
+                  name="guests"
+                  value={bookingDetails.guests}
+                  onChange={handleChange}
+                  className="w-full p-2 border rounded-md"
+                >
+                  <option>1 Guest</option>
+                  <option>2 Guests</option>
+                  <option>3 Guests</option>
+                  <option>4+ Guests</option>
+                </select>
+              </div>
+
+              {/* User Details */}
+              <div>
+                <label className="block text-sm font-medium">Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={bookingDetails.name}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-2 border rounded-md"
+                  placeholder="John Doe"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={bookingDetails.email}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-2 border rounded-md"
+                  placeholder="example@mail.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">
+                  Phone Number
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={bookingDetails.phone}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-2 border rounded-md"
+                  placeholder="+1 234 567 890"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">Address</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={bookingDetails.address}
+                  onChange={handleChange}
+                  required
+                  className="w-full p-2 border rounded-md"
+                  placeholder="123 Main Street, City, Country"
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full mt-3 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Confirm Booking
+              </button>
+            </form>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default DetailsPopup;

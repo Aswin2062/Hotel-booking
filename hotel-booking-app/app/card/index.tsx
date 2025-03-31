@@ -1,40 +1,48 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { HotelJSON } from "@/components/reusable";
 import Image from "next/image";
 import { THotel } from "@/types/Json";
+import DetailsPopup from "../detailsPopup"; // Import popup component
 
 const CardDetails = () => {
-    const router = useRouter();
     const [hotels, setHotels] = useState<THotel[]>([]);
+    const [selectedHotel, setSelectedHotel] = useState<THotel | null>(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     useEffect(() => {
         if (HotelJSON) {
-            const hotelsWithDiscounts = HotelJSON.map(hotel => {
-                const discountPercentage = Math.floor(Math.random() * 21) + 10;
-                const originalRate = hotel.rates_from || 100;
-                const discountAmount = (originalRate * discountPercentage) / 100;
-                const discountedRate = originalRate - discountAmount;
+            const hotelsWithDiscounts = HotelJSON
+                .filter(hotel => hotel.discount) // 🔹 Filter hotels with discount
+                .map(hotel => {
+                    const discountPercentage = hotel.discount || 0; 
+                    const originalRate = hotel.rates_from || 100;
+                    const discountAmount = (originalRate * discountPercentage) / 100;
+                    const discountedRate = originalRate - discountAmount;
 
-                return { ...hotel, discountPercentage, discountAmount, discountedRate };
-            });
+                    return { 
+                        ...hotel, 
+                        discountPercentage, 
+                        discountAmount, 
+                        discountedRate 
+                    };
+                });
 
             setHotels(hotelsWithDiscounts);
         }
     }, []);
 
     const handleCardClick = (hotel: THotel) => {
-        localStorage.setItem("selectedHotel", JSON.stringify(hotel));
-        router.push(`/details`);
+        setSelectedHotel(hotel); // Set selected hotel
+        setIsPopupOpen(true); // Open popup
     };
 
     return (
         <div className="flex flex-col">
             <h1 className="text-2xl font-bold mb-4 ml-[5rem] mt-[2rem]">Deals for the weekend</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[5rem] p-4 mx-[4%]">
-                {hotels.slice(0, 6).map((hotel, index) => (  // 🔹 Display only first 6 items
+                {hotels.map((hotel, index) => (  
                     <div 
                         key={`${hotel.hotel_id}-${index}`} 
                         className="border rounded-lg shadow-lg overflow-hidden cursor-pointer"
@@ -51,7 +59,7 @@ const CardDetails = () => {
                             <h2 className="text-xl font-semibold">{hotel.hotel_name}</h2>
                             <p className="text-gray-600">{hotel.city}, {hotel.country}</p>
                             <p className="text-yellow-500">⭐ {hotel.star_rating || "N/A"}</p>
-                            
+
                             {/* Show discount details */}
                             <div className="mt-2">
                                 <p className="text-gray-500 line-through">${hotel.rates_from?.toFixed(2)}</p>
@@ -66,6 +74,11 @@ const CardDetails = () => {
                     </div>
                 ))}
             </div>
+
+            {/* Show Popup when a hotel is selected */}
+            {isPopupOpen && selectedHotel && (
+                <DetailsPopup hotel={selectedHotel} onClose={() => setIsPopupOpen(false)} />
+            )}
         </div>
     );
 };

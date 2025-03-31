@@ -3,6 +3,21 @@
 import { HotelJSON } from "@/components/reusable";
 import Image from "next/image";
 import Link from "next/link";
+import NorthernImg from "@/public/NorthernThailand.jpg";
+import EasternImg from "@/public/Eastern Thailand.jpg";
+import CenterImg from "@/public/CentralThailand.webp";
+import LowerImg from "@/public/Lower Northern Thailand.jpg";
+import SouthImg from "@/public/Southern Thailand.jpg";
+import WesternImg from "@/public/Western Thailand.jpg";
+
+const stateImages: Record<string, any> = {
+  "Northern Thailand": NorthernImg,
+  "Eastern Thailand": EasternImg,
+  "Central Thailand": CenterImg,
+  "Lower Northern Thailand": LowerImg,
+  "Southern Thailand": SouthImg,
+  "Western Thailand": WesternImg,
+};
 
 const Category = () => {
   const hotels = HotelJSON;
@@ -18,20 +33,24 @@ const Category = () => {
     <div className="mx-[5rem] mt-[2rem]">
       <h2 className="text-2xl font-bold mb-4">Trending Destinations</h2>
       <p className="text-gray-600 mb-6">Most popular choices for travelers</p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-[5%]">
+      <div className="grid grid-cols-2 gap-4 mx-[5%]">
         {Object.entries(groupedHotels).map(([location, hotels], index) => {
           const [country, state] = location.split(",");
+          const isFullWidth = (index + 1) % 3 === 0; // Every 3rd item takes full width
+          const imageSrc = stateImages[state] || hotels[0].photo1; // Use mapped image if available, else fallback
+
           return (
             <Link
               key={index}
               href={{
                 pathname: "/details",
-                query: { country, state }, // Pass props as query params
+                query: { country, state },
               }}
+              className={isFullWidth ? "col-span-2" : "col-span-1"} // Full width every 3rd item
             >
               <div className="relative rounded-lg overflow-hidden shadow-lg border-2 p-1 cursor-pointer">
                 <Image
-                  src={hotels[0].photo1}
+                  src={imageSrc}
                   alt={location}
                   width={400}
                   height={250}

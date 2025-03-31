@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaSearch, FaUser, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import CardDetails from "../card";
 import Navbar from "../navbar";
@@ -11,6 +12,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // Import default styles
 
 const HomePage = () => {
+  const router = useRouter();
   const [location, setLocation] = useState("");
   const [dates, setDates] = useState<[Date, Date] | null>(null);
   const [travelers, setTravelers] = useState(2);
@@ -35,8 +37,10 @@ const HomePage = () => {
         loc.toLowerCase().includes(input.toLowerCase())
       );
       setFilteredLocations(filtered);
+      setDropdownOpen(true);
     } else {
       setFilteredLocations(allLocations);
+      setDropdownOpen(false);
     }
   };
 
@@ -45,6 +49,26 @@ const HomePage = () => {
     setLocation(selected);
     setDropdownOpen(false);
   };
+
+  // Handle search button click
+  const handleSearch = () => {
+    if (!location) {
+      alert("Please select a location.");
+      return;
+    }
+  
+    const [state, country] = location.split(", ");
+    if (!state || !country) {
+      alert("Invalid location format.");
+      return;
+    }
+  
+    // Construct URL manually
+    const searchUrl = `/details?state=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}`;
+  
+    router.push(searchUrl);
+  };
+  
 
   return (
     <div className="">
@@ -148,7 +172,10 @@ const HomePage = () => {
           </div>
 
           {/* Search Button */}
-          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center hover:bg-blue-700">
+          <button
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center hover:bg-blue-700"
+            onClick={handleSearch}
+          >
             <FaSearch className="mr-2" /> Search
           </button>
         </div>
