@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { THotel } from "@/types/Json";
+import { THotel } from "@/dao";
 import Image from "next/image";
 import makePayment from "../../components/paymentService";
 
@@ -11,9 +11,9 @@ interface DetailsPopupProps {
 }
 
 const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
-  const AccessKeyId = process.env.ACCESSKEY_ID
-  console.log("AccessKeyId",AccessKeyId)
-  const SecretAccessKey = process.env.SECRET_ACCESS_KEY
+  const AccessKeyId = process.env.ACCESSKEY_ID;
+  console.log("AccessKeyId", AccessKeyId);
+  const SecretAccessKey = process.env.SECRET_ACCESS_KEY;
 
   const [bookingDetails, setBookingDetails] = useState({
     checkIn: "",
@@ -31,7 +31,7 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
     hotel.photo3,
     hotel.photo4,
     hotel.photo5,
-  ].filter(Boolean); // Removes any undefined/null values
+  ].filter(Boolean);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -39,7 +39,6 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
     setBookingDetails({ ...bookingDetails, [e.target.name]: e.target.value });
   };
 
-  // Calculate discounted price if a discount exists
   const discountPercentage = hotel.discount || 0;
   const originalRate = hotel.rates_from || 100;
   const discountAmount = (originalRate * discountPercentage) / 100;
@@ -49,18 +48,17 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
     e.preventDefault();
     console.log("Booking Details:", bookingDetails);
     await makePayment(
-      bookingDetails, 
-      discountPercentage ? discountedRate : originalRate, 
-      AccessKeyId, 
+      bookingDetails,
+      discountPercentage ? discountedRate : originalRate,
+      AccessKeyId,
       SecretAccessKey
-    );    // alert("Booking Confirmed! Check console for details.");
+    );
     onClose();
   };
 
   return (
-<div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center px-4 sm:px-0">
-  <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl relative">
-        {/* Close Button */}
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center px-4 sm:px-0">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl relative">
         <button
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
           onClick={onClose}
@@ -68,7 +66,6 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
           ✖
         </button>
 
-        {/* Hotel Details */}
         <h2 className="text-xl sm:text-2xl font-bold mb-2 text-center">
           {hotel.hotel_name}
         </h2>
@@ -77,7 +74,6 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
-          {/* Hotel Images Carousel */}
           <div className="w-full sm:w-1/2">
             {hotelImages.length > 0 ? (
               <div className="grid grid-cols-2 gap-2">
@@ -102,7 +98,6 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
               />
             )}
 
-            {/* Price Section with Discount */}
             <div className="text-center mt-2">
               {discountPercentage > 0 ? (
                 <div>
@@ -126,14 +121,12 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
             </div>
           </div>
 
-          {/* Booking Form */}
           <div className="w-full sm:w-1/2">
             <h3 className="text-lg font-semibold text-center sm:text-left">
               Room Booking
             </h3>
 
             <form onSubmit={handleSubmit} className="mt-4 space-y-3">
-              {/* Check-in & Check-out */}
               <div className="flex flex-col sm:flex-row gap-2">
                 <div className="w-full">
                   <label className="block text-sm font-medium">
@@ -163,7 +156,6 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
                 </div>
               </div>
 
-              {/* Guests Selection */}
               <div>
                 <label className="block text-sm font-medium">Guests</label>
                 <select
@@ -179,7 +171,6 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
                 </select>
               </div>
 
-              {/* User Details */}
               <div>
                 <label className="block text-sm font-medium">Full Name</label>
                 <input
@@ -234,7 +225,6 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
                 />
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 className="w-full mt-3 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"

@@ -8,9 +8,6 @@ const Navbar = () => {
   const { data: session } = useSession() as { data: any };
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log("usrr", session);
-
-  // If session is null or undefined, don't render the Navbar
   if (!session) return null;
 
   return (
@@ -42,7 +39,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href="/about"
+              href=""
               className="block py-2 px-4 text-gray-700 hover:text-blue-500"
             >
               About
@@ -50,14 +47,13 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href="/contact"
+              href=""
               className="block py-2 px-4 text-gray-700 hover:text-blue-500"
             >
               Contact
             </Link>
           </li>
 
-          {/* Show "Manage" link only if role is "ADMIN" */}
           {session?.role === "ADMIN" && (
             <li>
               <Link

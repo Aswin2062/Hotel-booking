@@ -2,10 +2,9 @@
 
 import { useState, Suspense } from "react";
 import Link from "next/link";
-import {  Hotel } from "lucide-react";
+import { Hotel } from "lucide-react";
 import { useAuth } from "../../components/auth-provider";
 import { useSearchParams } from "next/navigation";
-// import Home from "@/app/home/page"/
 
 const AuthPageContent = () => {
   const { logIn, signUp } = useAuth();
@@ -14,7 +13,9 @@ const AuthPageContent = () => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const searchParams = useSearchParams();
-  const [message, setMessage] = useState<string>(searchParams.get("error") ?? "");
+  const [message, setMessage] = useState<string>(
+    searchParams.get("error") ?? ""
+  );
 
   const isValidPassword = (password: string) => {
     const passwordRegex =
@@ -60,13 +61,6 @@ const AuthPageContent = () => {
 
   return (
     <div className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-b from-gray-200 to-gray-400">
-      {/* <Link
-        href="/Home"
-        className="absolute left-4 top-4 md:left-8 md:top-8 flex items-center gap-2"
-      >
-        <Hotel className="h-6 w-6" />
-        <span className="font-bold">Hotel Booking </span>
-      </Link> */}
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] border rounded-lg bg-white px-6 py-8 shadow-lg">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
@@ -76,7 +70,6 @@ const AuthPageContent = () => {
             {isLogin ? "Sign in to your account" : "Create a new account"}
           </p>
         </div>
-{/* <Home/> */}
         <div className="w-full">
           <div className="grid w-full grid-cols-2 border-b">
             <button

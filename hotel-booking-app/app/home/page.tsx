@@ -2,14 +2,18 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaSearch, FaUser, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaSearch,
+  FaUser,
+  FaCalendarAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import CardDetails from "../card";
-import Navbar from "../navbar";
 import BgImage from "@/public/vacation.jpg";
 import Category from "../category";
 import { HotelJSON } from "@/components/reusable";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; // Import default styles
+import "react-calendar/dist/Calendar.css";
 
 const HomePage = () => {
   const router = useRouter();
@@ -20,14 +24,12 @@ const HomePage = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
 
-  // Extract unique locations (state, country)
   const locationsSet = new Set<string>();
   HotelJSON.forEach((hotel) => {
     locationsSet.add(`${hotel.state}, ${hotel.country}`);
   });
   const allLocations = Array.from(locationsSet);
 
-  // Handle input change & filter locations
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     setLocation(input);
@@ -44,36 +46,30 @@ const HomePage = () => {
     }
   };
 
-  // Select a location from dropdown
   const selectLocation = (selected: string) => {
     setLocation(selected);
     setDropdownOpen(false);
   };
 
-  // Handle search button click
   const handleSearch = () => {
     if (!location) {
       alert("Please select a location.");
       return;
     }
-  
+
     const [state, country] = location.split(", ");
     if (!state || !country) {
       alert("Invalid location format.");
       return;
     }
-  
-    // Construct URL manually
-    const searchUrl = `/details?state=${encodeURIComponent(state)}&country=${encodeURIComponent(country)}`;
-  
+    const searchUrl = `/details?state=${encodeURIComponent(
+      state
+    )}&country=${encodeURIComponent(country)}`;
     router.push(searchUrl);
   };
-  
 
   return (
-    <div className="">
-      <div className="" />
-
+    <div>
       <div
         className="relative flex flex-col items-center justify-center h-[500px]"
         style={{
@@ -84,13 +80,11 @@ const HomePage = () => {
       >
         <div className="w-[70%] h-[100px] bg-white rounded-4xl flex items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-semibold text-black">
-            Relax, you’re booking a Hotel Finder
+            Relax, you’re booking at Hotel Finder
           </h1>
         </div>
 
-        {/* Search Bar */}
         <div className="bg-white rounded-xl p-4 shadow-lg flex flex-col md:flex-row gap-2 mt-4 md:gap-4 w-full max-w-3xl relative">
-          {/* Location Input */}
           <div className="relative w-full">
             <div
               className="flex items-center border rounded-lg px-3 py-2 cursor-pointer"
@@ -106,7 +100,6 @@ const HomePage = () => {
               />
             </div>
 
-            {/* Dropdown Suggestions */}
             {dropdownOpen && (
               <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-1 shadow-lg max-h-40 overflow-auto">
                 {filteredLocations.length > 0 ? (
@@ -126,7 +119,6 @@ const HomePage = () => {
             )}
           </div>
 
-          {/* Date Picker */}
           <div className="relative w-full">
             <div
               className="flex items-center border rounded-lg px-3 py-2 cursor-pointer"
@@ -159,7 +151,6 @@ const HomePage = () => {
             )}
           </div>
 
-          {/* Travelers Input */}
           <div className="flex items-center border rounded-lg px-3 py-2 w-full">
             <FaUser className="text-gray-500 mr-2" />
             <input
@@ -171,7 +162,6 @@ const HomePage = () => {
             />
           </div>
 
-          {/* Search Button */}
           <button
             className="bg-blue-600 text-white px-6 py-2 rounded-lg flex items-center hover:bg-blue-700"
             onClick={handleSearch}

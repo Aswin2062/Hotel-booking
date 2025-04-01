@@ -3,84 +3,100 @@
 import { useState, useEffect } from "react";
 import { HotelJSON } from "@/components/reusable";
 import Image from "next/image";
-import { THotel } from "@/types/Json";
-import DetailsPopup from "../detailsPopup"; // Import popup component
+import { THotel } from "@/dao";
+import DetailsPopup from "../detailsPopup";
+import { MapPin } from "lucide-react";
 
 const CardDetails = () => {
-    const [hotels, setHotels] = useState<THotel[]>([]);
-    const [selectedHotel, setSelectedHotel] = useState<THotel | null>(null);
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [hotels, setHotels] = useState<THotel[]>([]);
+  const [selectedHotel, setSelectedHotel] = useState<THotel | null>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
-    useEffect(() => {
-        if (HotelJSON) {
-            const hotelsWithDiscounts = HotelJSON
-                .filter(hotel => hotel.discount) // 🔹 Filter hotels with discount
-                .map(hotel => {
-                    const discountPercentage = hotel.discount || 0; 
-                    const originalRate = hotel.rates_from || 100;
-                    const discountAmount = (originalRate * discountPercentage) / 100;
-                    const discountedRate = originalRate - discountAmount;
+  useEffect(() => {
+    if (HotelJSON) {
+      const hotelsWithDiscounts = HotelJSON.filter(
+        (hotel) => hotel.discount
+      ).map((hotel) => {
+        const discountPercentage = hotel.discount || 0;
+        const originalRate = hotel.rates_from || 100;
+        const discountAmount = (originalRate * discountPercentage) / 100;
+        const discountedRate = originalRate - discountAmount;
 
-                    return { 
-                        ...hotel, 
-                        discountPercentage, 
-                        discountAmount, 
-                        discountedRate 
-                    };
-                });
+        return {
+          ...hotel,
+          discountPercentage,
+          discountAmount,
+          discountedRate,
+        };
+      });
 
-            setHotels(hotelsWithDiscounts);
-        }
-    }, []);
+      setHotels(hotelsWithDiscounts);
+    }
+  }, []);
 
-    const handleCardClick = (hotel: THotel) => {
-        setSelectedHotel(hotel); // Set selected hotel
-        setIsPopupOpen(true); // Open popup
-    };
+  const handleCardClick = (hotel: THotel) => {
+    setSelectedHotel(hotel);
+    setIsPopupOpen(true);
+  };
 
-    return (
-        <div className="flex flex-col">
-            <h1 className="text-2xl font-bold mb-4 ml-[5rem] mt-[2rem]">Deals for the weekend</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[5rem] p-4 mx-[4%]">
-                {hotels.map((hotel, index) => (  
-                    <div 
-                        key={`${hotel.hotel_id}-${index}`} 
-                        className="border rounded-lg shadow-lg overflow-hidden cursor-pointer"
-                        onClick={() => handleCardClick(hotel)}
-                    >
-                        <Image 
-                            src={hotel.photo1 || "/default-hotel.jpg"} 
-                            alt={hotel.hotel_name} 
-                            width={400}
-                            height={250}
-                            className="w-full h-48 object-cover"
-                        />
-                        <div className="p-4">
-                            <h2 className="text-xl font-semibold">{hotel.hotel_name}</h2>
-                            <p className="text-gray-600">{hotel.city}, {hotel.country}</p>
-                            <p className="text-yellow-500">⭐ {hotel.star_rating || "N/A"}</p>
+  return (
+    <div className="flex flex-col">
+      <h1 className="text-2xl font-bold mb-4 ml-[6%] mt-[2.5rem]">
+        Deals for the weekend
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[5rem] p-4 mx-[8%]">
+        {hotels.map((hotel, index) => (
+          <div
+            key={`${hotel.hotel_id}-${index}`}
+            className="border rounded-lg shadow-lg overflow-hidden cursor-pointer"
+            onClick={() => handleCardClick(hotel)}
+          >
+            <Image
+              src={hotel.photo1 || "/default-hotel.jpg"}
+              alt={hotel.hotel_name}
+              width={400}
+              height={250}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h2 className="text-xl font-semibold">{hotel.hotel_name}</h2>
+              <p className="text-gray-600 flex flex-row gap-2">
+                {" "}
+                <MapPin className="w-[15px]" />
+                {hotel.city},{hotel.country}
+              </p>
+              <p className="text-yellow-500">⭐ {hotel.star_rating || "N/A"}</p>
+              <h2 className="text-lg font-semibold">Overview</h2>
 
-                            {/* Show discount details */}
-                            <div className="mt-2">
-                                <p className="text-gray-500 line-through">${hotel.rates_from?.toFixed(2)}</p>
-                                <p className="text-lg font-bold text-green-600">
-                                    ${hotel.discountedRate?.toFixed(2)} <span className="text-gray-500">/ night</span>
-                                </p>
-                                <p className="text-red-500 text-sm">
-                                    Save ${hotel.discountAmount?.toFixed(2)} ({hotel.discountPercentage}%)
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+              <p className="h-[90px] overflow-auto text-sm text-[#616161]">
+                {hotel.overview}
+              </p>
+              <div className="mt-2">
+                <p className="text-gray-500 line-through">
+                  ${hotel.rates_from?.toFixed(2)}
+                </p>
+                <p className="text-lg font-bold text-green-600">
+                  ${hotel.discountedRate?.toFixed(2)}{" "}
+                  <span className="text-gray-500">/ night</span>
+                </p>
+                <p className="text-red-500 text-sm">
+                  Save ${hotel.discountAmount?.toFixed(2)} (
+                  {hotel.discountPercentage}%)
+                </p>
+              </div>
             </div>
+          </div>
+        ))}
+      </div>
 
-            {/* Show Popup when a hotel is selected */}
-            {isPopupOpen && selectedHotel && (
-                <DetailsPopup hotel={selectedHotel} onClose={() => setIsPopupOpen(false)} />
-            )}
-        </div>
-    );
+      {isPopupOpen && selectedHotel && (
+        <DetailsPopup
+          hotel={selectedHotel}
+          onClose={() => setIsPopupOpen(false)}
+        />
+      )}
+    </div>
+  );
 };
 
 export default CardDetails;

@@ -1,11 +1,7 @@
-
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useSession } from "next-auth/react";
 
 export default function Home() {
-
-  
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
@@ -18,7 +14,7 @@ export default function Home() {
                     Find Your Perfect Vacation Rental
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                    Discover beautiful vacation homes, cozy cabins, and luxury 
+                    Discover beautiful vacation homes, cozy cabins, and luxury
                     resorts. Book your next getaway with ease and comfort.
                   </p>
                 </div>

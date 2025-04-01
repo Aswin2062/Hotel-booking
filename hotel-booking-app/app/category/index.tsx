@@ -22,12 +22,15 @@ const stateImages: Record<string, any> = {
 const Category = () => {
   const hotels = HotelJSON;
 
-  const groupedHotels = hotels.reduce<Record<string, typeof hotels>>((acc, hotel) => {
-    const key = `${hotel.country},${hotel.state}`;
-    if (!acc[key]) acc[key] = [];
-    acc[key].push(hotel);
-    return acc;
-  }, {});
+  const groupedHotels = hotels.reduce<Record<string, typeof hotels>>(
+    (acc, hotel) => {
+      const key = `${hotel.country},${hotel.state}`;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(hotel);
+      return acc;
+    },
+    {}
+  );
 
   return (
     <div className="mx-[5rem] mt-[2rem]">
@@ -36,8 +39,8 @@ const Category = () => {
       <div className="grid grid-cols-2 gap-4 mx-[5%]">
         {Object.entries(groupedHotels).map(([location, hotels], index) => {
           const [country, state] = location.split(",");
-          const isFullWidth = (index + 1) % 3 === 0; // Every 3rd item takes full width
-          const imageSrc = stateImages[state] || hotels[0].photo1; // Use mapped image if available, else fallback
+          const isFullWidth = (index + 1) % 3 === 0;
+          const imageSrc = stateImages[state] || hotels[0].photo1;
 
           return (
             <Link
@@ -46,7 +49,7 @@ const Category = () => {
                 pathname: "/details",
                 query: { country, state },
               }}
-              className={isFullWidth ? "col-span-2" : "col-span-1"} // Full width every 3rd item
+              className={isFullWidth ? "col-span-2" : "col-span-1"}
             >
               <div className="relative rounded-lg overflow-hidden shadow-lg border-2 p-1 cursor-pointer">
                 <Image
@@ -57,7 +60,9 @@ const Category = () => {
                   className="w-full h-[300px] object-cover rounded-lg"
                 />
                 <div className="absolute top-2 left-2 bg-white bg-opacity-50 px-2 py-1 rounded-md">
-                  <h3 className="text-black font-semibold text-[14px]">{state}, {country}</h3>
+                  <h3 className="text-black font-semibold text-[14px]">
+                    {state}, {country}
+                  </h3>
                 </div>
               </div>
             </Link>

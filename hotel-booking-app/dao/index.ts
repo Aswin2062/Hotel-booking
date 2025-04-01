@@ -1,59 +1,62 @@
 export type TResultResponse = {
-    message: string,
-    result: boolean
-}
+  message: string;
+  result: boolean;
+};
 
 export type ISignUpRequest = {
-    email?: string, password?: string
-}
+  email?: string;
+  password?: string;
+};
 
 export type ISignUpResponse = TResultResponse;
 
-export type IHttpCodeDao = {
-    code: string;
-    name: string;
-    description: string;
-    image?: string;
-    id?: string;
-}
-
 export enum UserRoles {
-    USER = 'USER'
+  USER = "USER",
 }
 
-export enum HttpCodeBulkImportResult {
-    INVALID_REQUEST,
-    DUPLICATE_CODE,
-    EXISTING_CODE,
-    EMPTY_LIST,
-    SUCCESS
-}
-
-export type TSavedFilterRequest = {
-    name: string,
-    query: string,
-    codes: string[]
-}
-
-export enum SavedFilterProcessingResult {
-    INVALID_CODES,
-    DUPLICATE_NAME,
-    MISSING_MANDATORY,
-    INVALID_ID,
-    SUCCESS
-}
-
-export type TSavedFilter = {
-    name: string,
-    query: string,
-    httpCodes?: {id:string, code: string, image: string}[],
-    id: string,
-    createdAt: Date,
-    updatedAt: Date,
-}
-
-export type TSavedFilterUpdate = {
-    result: boolean;
-    filter?: TSavedFilter;
-    errorMessage?: string;
-}
+export type THotel = {
+    discountPercentage?: any;
+    discountAmount?: any;
+    discountedRate?: any;
+    hotel_id: number;
+    chain_id: number;
+    chain_name: string;
+    brand_id: number;
+    brand_name: string;
+    hotel_name: string;
+    hotel_formerly_name: string;
+    hotel_translated_name: string;
+    addressline1: string;
+    addressline2: string;
+    zipcode: string;
+    city: string;
+    state: string;
+    country: string;
+    countryisocode: string;
+    star_rating: number;
+    longitude: number;
+    latitude: number;
+    url: string;
+    checkin: string;
+    checkout: string;
+    numberrooms: number | null;
+    numberfloors: number | null;
+    yearopened: number | null;
+    yearrenovated: number | null;
+    photo1: string;
+    photo2: string;
+    photo3: string;
+    photo4: string;
+    photo5: string;
+    overview: string;
+    rates_from: number;
+    continent_id: number;
+    continent_name: string;
+    city_id: number;
+    country_id: number;
+    number_of_reviews: number;
+    rating_average: number;
+    rates_currency: string;
+    discount?: number;
+  };
+  
