@@ -1,13 +1,13 @@
 "use client";
 
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { HotelJSON } from "@/components/reusable";
 import { THotel } from "@/types/Json";
 import DetailsPopup from "../detailsPopup";
 
-const Details = () => {
+const DetailsContent = () => {
     const searchParams = useSearchParams();
     const country = searchParams.get("country");
     const state = searchParams.get("state");
@@ -90,6 +90,14 @@ const Details = () => {
                 <DetailsPopup hotel={selectedHotel} onClose={() => setIsPopupOpen(false)} />
             )}
         </div>
+    );
+};
+
+const Details = () => {
+    return (
+        <Suspense fallback={<p>Loading...</p>}>
+            <DetailsContent />
+        </Suspense>
     );
 };
 

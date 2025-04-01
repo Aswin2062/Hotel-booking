@@ -12,16 +12,15 @@ import {
     htmlBody: string;
   }
   
- const sendEmail = async (payload: TEmailPayload): Promise<SendEmailCommandOutput> => {
+  const sendEmail = async (payload: TEmailPayload & { accessKeyId: string; secretAccessKey: string; }) => {
+    console.log("Using AWS Credentials:", payload.accessKeyId, payload.secretAccessKey);
+
     const region = 'ap-south-1'; 
-    const accessKeyId = process.env.ACCESSKEY_ID!; 
-    const secretAccessKey = process.env.SECRET_ACCESS_KEY!; 
-  
     const sesClient = new SESClient({
       region,
       credentials: {
-        accessKeyId,
-        secretAccessKey,
+        accessKeyId: payload.accessKeyId,
+        secretAccessKey: payload.secretAccessKey,
       },
     });
   
@@ -51,6 +50,10 @@ import {
   
     try {
       const command = new SendEmailCommand(emailParams);
+      console.log("Using AWS Credentials:", payload.accessKeyId, payload.secretAccessKey);
+console.log("hiiii"),
+console.log("emailParams")
+console.log("sesClient",sesClient)
       const response = await sesClient.send(command);
       console.log('Email sent successfully:', response);
       return response;

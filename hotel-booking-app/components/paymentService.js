@@ -2,7 +2,7 @@ import React from "react";
 import Swal from "sweetalert2";
 import sendEmail from "./mailServer";
 
-const makePayment = async (user, price) => {
+const makePayment = async (user, price, accessKeyId, secretAccessKey) => {
   const total = Number((price * 100).toFixed(2));
   const totalInINR = total * 86;
   const res = await initializeRazorpay();
@@ -16,7 +16,7 @@ const makePayment = async (user, price) => {
   }
 
   const options = {
-    key: process.env.RAZOR_PAY_ID,
+    key: 'rzp_test_Ypp9Z1aRlFxjAY',
     amount: totalInINR,
     currency: "INR",
     name: "Demo",
@@ -113,15 +113,26 @@ const makePayment = async (user, price) => {
         </body>
         </html>`;
 
-      const mailPayload = {
-        sourceEmail: "aswincharlie8877@gmail.com",
-        toAddresses: [user.email],
-        subject: "Booking confirmation from hotelFinder",
-        textBody: "",
-        htmlBody: emailTemplate,
-      };
+        const mailPayload = {
+          sourceEmail: "aswincharlie8877@gmail.com",
+          toAddresses: [user.email],
+          subject: "Booking confirmation from hotelFinder",
+          textBody: "",
+          htmlBody: emailTemplate,
+          accessKeyId, 
+          secretAccessKey
+        };
       sendEmail(mailPayload);
       // ToDo API to store the payment details if success
+    },
+    modal: {
+      ondismiss: function () {
+        Swal.fire({
+          icon: "error",
+          title: "Payment Failed!",
+          text: "It looks like the payment was cancelled or failed. Please try again.",
+        });
+      },
     },
   };
 

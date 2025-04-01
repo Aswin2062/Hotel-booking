@@ -11,6 +11,10 @@ interface DetailsPopupProps {
 }
 
 const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
+  const AccessKeyId = process.env.ACCESSKEY_ID
+  console.log("AccessKeyId",AccessKeyId)
+  const SecretAccessKey = process.env.SECRET_ACCESS_KEY
+
   const [bookingDetails, setBookingDetails] = useState({
     checkIn: "",
     checkOut: "",
@@ -44,14 +48,18 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Booking Details:", bookingDetails);
-    await makePayment(bookingDetails, discountPercentage ? discountedRate : originalRate);
-    // alert("Booking Confirmed! Check console for details.");
+    await makePayment(
+      bookingDetails, 
+      discountPercentage ? discountedRate : originalRate, 
+      AccessKeyId, 
+      SecretAccessKey
+    );    // alert("Booking Confirmed! Check console for details.");
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 sm:px-0">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl relative">
+<div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center px-4 sm:px-0">
+  <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl relative">
         {/* Close Button */}
         <button
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
