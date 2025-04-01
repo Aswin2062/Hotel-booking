@@ -3,43 +3,35 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { HotelJSON } from "@/components/reusable";
-import { THotel } from "@/dao";
 import DetailsPopup from "../detailsPopup";
+import { HotelService } from "@/services/HotelService";
+import { IHotelDao } from "@/dao";
 
 const DetailsContent = () => {
   const searchParams = useSearchParams();
   const country = searchParams.get("country");
   const state = searchParams.get("state");
 
-  const [hotels, setHotels] = useState<THotel[]>([]);
-  const [selectedHotel, setSelectedHotel] = useState<THotel | null>(null);
+  const [hotels, setHotels] = useState<IHotelDao[]>([]);
+  const [selectedHotel, setSelectedHotel] = useState<IHotelDao | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
+    const fetchByLocation = async () => {
+      const hotelsByLocation = await HotelService.getHotelsByLocation(
+        `${state},${country}`
+      );
+      setHotels(hotelsByLocation);
+    };
     if (country && state) {
-      const hotelData: THotel[] = HotelJSON;
-      const filteredHotels = hotelData
-        .filter((hotel) => hotel.country === country && hotel.state === state)
-        .map((hotel) => {
-          const discountPercentage = hotel.discount || 0;
-          const originalRate = hotel.rates_from || 100;
-          const discountAmount = (originalRate * discountPercentage) / 100;
-          const discountedRate = originalRate - discountAmount;
-
-          return {
-            ...hotel,
-            discountPercentage,
-            discountAmount,
-            discountedRate,
-          };
-        });
-
-      setHotels(filteredHotels);
+      fetchByLocation();
     }
+    return () => {
+      setHotels([]);
+    };
   }, [country, state]);
 
-  const handleBooking = (hotel: THotel) => {
+  const handleBooking = (hotel: IHotelDao) => {
     setSelectedHotel(hotel);
     setIsPopupOpen(true);
   };
@@ -62,7 +54,7 @@ const DetailsContent = () => {
               className="border rounded-lg shadow-lg overflow-hidden cursor-pointer"
             >
               <Image
-                src={hotel.photo1 || "/default-hotel.jpg"}
+                src={hotel.photos[0] || "/default-hotel.jpg"}
                 alt={hotel.hotel_name}
                 width={400}
                 height={250}
@@ -82,7 +74,7 @@ const DetailsContent = () => {
                   {hotel.overview}
                 </p>
 
-                {hotel.discountPercentage > 0 ? (
+                {hotel.discountPercentage && hotel.discountPercentage > 0 ? (
                   <div className="mt-2">
                     <p className="text-gray-500 line-through">
                       ${hotel.rates_from?.toFixed(2)}

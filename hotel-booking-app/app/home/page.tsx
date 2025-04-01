@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   FaSearch,
@@ -10,38 +10,33 @@ import {
 } from "react-icons/fa";
 import CardDetails from "../card";
 import BgImage from "@/public/vacation.jpg";
-import Category from "../category";
-import { HotelJSON } from "@/components/reusable";
+import Category from "../../components/Category";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { HotelService } from "@/services/HotelService";
 
 const HomePage = () => {
   const router = useRouter();
   const [location, setLocation] = useState("");
+  const [locations, setLocations] = useState<string[]>([]);
   const [dates, setDates] = useState<[Date, Date] | null>(null);
   const [travelers, setTravelers] = useState(2);
   const [filteredLocations, setFilteredLocations] = useState<string[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
 
-  const locationsSet = new Set<string>();
-  HotelJSON.forEach((hotel) => {
-    locationsSet.add(`${hotel.state}, ${hotel.country}`);
-  });
-  const allLocations = Array.from(locationsSet);
-
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
     setLocation(input);
 
     if (input.length > 0) {
-      const filtered = allLocations.filter((loc) =>
+      const filtered = locations.filter((loc) =>
         loc.toLowerCase().includes(input.toLowerCase())
       );
       setFilteredLocations(filtered);
       setDropdownOpen(true);
     } else {
-      setFilteredLocations(allLocations);
+      setFilteredLocations(locations);
       setDropdownOpen(false);
     }
   };
@@ -67,6 +62,17 @@ const HomePage = () => {
     )}&country=${encodeURIComponent(country)}`;
     router.push(searchUrl);
   };
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      const locations = await HotelService.getLocations();
+      setLocations(locations);
+    };
+    fetchLocations();
+    return () => {
+      setLocations([]);
+    };
+  }, []);
 
   return (
     <div>
@@ -171,9 +177,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div>
-        <Category />
-      </div>
+      <div>{locations.length && <Category locations={locations} />}</div>
 
       <div>
         <CardDetails />

@@ -1,40 +1,29 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { HotelJSON } from "@/components/reusable";
 import Image from "next/image";
-import { THotel } from "@/dao";
 import DetailsPopup from "../detailsPopup";
 import { MapPin } from "lucide-react";
+import { HotelService } from "@/services/HotelService";
+import { IHotelDao } from "@/dao";
 
 const CardDetails = () => {
-  const [hotels, setHotels] = useState<THotel[]>([]);
-  const [selectedHotel, setSelectedHotel] = useState<THotel | null>(null);
+  const [hotels, setHotels] = useState<IHotelDao[]>([]);
+  const [selectedHotel, setSelectedHotel] = useState<IHotelDao | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
-    if (HotelJSON) {
-      const hotelsWithDiscounts = HotelJSON.filter(
-        (hotel) => hotel.discount
-      ).map((hotel) => {
-        const discountPercentage = hotel.discount || 0;
-        const originalRate = hotel.rates_from || 100;
-        const discountAmount = (originalRate * discountPercentage) / 100;
-        const discountedRate = originalRate - discountAmount;
-
-        return {
-          ...hotel,
-          discountPercentage,
-          discountAmount,
-          discountedRate,
-        };
-      });
-
-      setHotels(hotelsWithDiscounts);
-    }
+    const fetchDiscountHotels = async () => {
+      const response = await HotelService.getDiscountHotels();
+      setHotels(response);
+    };
+    fetchDiscountHotels();
+    return () => {
+      setHotels([]);
+    };
   }, []);
 
-  const handleCardClick = (hotel: THotel) => {
+  const handleCardClick = (hotel: IHotelDao) => {
     setSelectedHotel(hotel);
     setIsPopupOpen(true);
   };
@@ -52,7 +41,7 @@ const CardDetails = () => {
             onClick={() => handleCardClick(hotel)}
           >
             <Image
-              src={hotel.photo1 || "/default-hotel.jpg"}
+              src={hotel.photos[0] || "/default-hotel.jpg"}
               alt={hotel.hotel_name}
               width={400}
               height={250}

@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { THotel } from "@/dao";
 import Image from "next/image";
 import makePayment from "../../components/paymentService";
+import { IHotelDao } from "@/dao";
 
 interface DetailsPopupProps {
-  hotel: THotel;
+  hotel: IHotelDao;
   onClose: () => void;
 }
 
@@ -24,14 +24,6 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
     phone: "",
     address: "",
   });
-
-  const hotelImages = [
-    hotel.photo1,
-    hotel.photo2,
-    hotel.photo3,
-    hotel.photo4,
-    hotel.photo5,
-  ].filter(Boolean);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -75,9 +67,9 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
 
         <div className="flex flex-col sm:flex-row gap-4 mt-4">
           <div className="w-full sm:w-1/2">
-            {hotelImages.length > 0 ? (
+            {hotel.photos.length > 0 ? (
               <div className="grid grid-cols-2 gap-2">
-                {hotelImages.map((image, index) => (
+                {hotel.photos.map((image, index) => (
                   <Image
                     key={index}
                     src={image}

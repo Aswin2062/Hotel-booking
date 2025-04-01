@@ -1,6 +1,3 @@
-"use client";
-
-import { HotelJSON } from "@/components/reusable";
 import Image from "next/image";
 import Link from "next/link";
 import NorthernImg from "@/public/NorthernThailand.jpg";
@@ -14,33 +11,21 @@ const stateImages: Record<string, any> = {
   "Northern Thailand": NorthernImg,
   "Eastern Thailand": EasternImg,
   "Central Thailand": CenterImg,
-  "Lower Northern Thailand": LowerImg,
+  "Lower northern Thailand": LowerImg,
   "Southern Thailand": SouthImg,
   "Western Thailand": WesternImg,
 };
 
-const Category = () => {
-  const hotels = HotelJSON;
-
-  const groupedHotels = hotels.reduce<Record<string, typeof hotels>>(
-    (acc, hotel) => {
-      const key = `${hotel.country},${hotel.state}`;
-      if (!acc[key]) acc[key] = [];
-      acc[key].push(hotel);
-      return acc;
-    },
-    {}
-  );
-
+const Category = ({ locations }: { locations: string[] }) => {
   return (
     <div className="mx-[5rem] mt-[2rem]">
       <h2 className="text-2xl font-bold mb-4">Trending Destinations</h2>
       <p className="text-gray-600 mb-6">Most popular choices for travelers</p>
       <div className="grid grid-cols-2 gap-4 mx-[5%]">
-        {Object.entries(groupedHotels).map(([location, hotels], index) => {
-          const [country, state] = location.split(",");
+        {locations.map((location, index) => {
+          const [state, country] = location.split(",");
           const isFullWidth = (index + 1) % 3 === 0;
-          const imageSrc = stateImages[state] || hotels[0].photo1;
+          const imageSrc = stateImages[state];
 
           return (
             <Link

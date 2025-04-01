@@ -1,4 +1,5 @@
 import mongoose, { Connection } from "mongoose";
+import { addHotelMasterData } from "./hotels";
 let cachedConnection: Connection | null = null;
 
 export async function connectToMongoDB() {
@@ -10,7 +11,7 @@ export async function connectToMongoDB() {
     const cnx = await mongoose.connect(process.env.MONGODB_URI!);
     cachedConnection = cnx.connection;
     console.log("New mongodb connection established");
-    addDefaultRecords();
+    await addDefaultRecords();
     return cachedConnection;
   } catch (error) {
     console.log(error);
@@ -19,5 +20,5 @@ export async function connectToMongoDB() {
 }
 
 async function addDefaultRecords() {
-  return Promise.all([]);
+  return Promise.all([addHotelMasterData()]);
 }
