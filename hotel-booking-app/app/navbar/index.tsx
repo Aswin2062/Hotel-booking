@@ -53,6 +53,14 @@ const Navbar = () => {
               Contact
             </Link>
           </li>
+          <li>
+            <Link
+              href="/myBooking"
+              className="block py-2 px-4 text-gray-700 hover:text-blue-500"
+            >
+              My Bookings
+            </Link>
+          </li>
 
           {session?.role === "ADMIN" && (
             <li>
