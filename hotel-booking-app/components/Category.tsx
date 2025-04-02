@@ -32,7 +32,7 @@ const Category = ({ locations }: { locations: string[] }) => {
               key={index}
               href={{
                 pathname: "/details",
-                query: { country, state },
+                query: { location },
               }}
               className={isFullWidth ? "col-span-2" : "col-span-1"}
             >

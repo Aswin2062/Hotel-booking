@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import DetailsPopup from "../detailsPopup";
+import DetailsPopup from "./DetailsPopup";
 import { MapPin } from "lucide-react";
 import { HotelService } from "@/services/HotelService";
 import { IHotelDao } from "@/dao";

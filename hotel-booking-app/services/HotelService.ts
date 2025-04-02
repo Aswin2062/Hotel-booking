@@ -1,4 +1,3 @@
-import { IHotelDao } from "@/dao";
 export const HotelService = {
   getLocations: async () => {
     try {

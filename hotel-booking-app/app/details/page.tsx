@@ -3,15 +3,14 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import DetailsPopup from "../detailsPopup";
+import DetailsPopup from "../../components/DetailsPopup";
 import { HotelService } from "@/services/HotelService";
 import { IHotelDao } from "@/dao";
 
 const DetailsContent = () => {
   const searchParams = useSearchParams();
-  const country = searchParams.get("country");
-  const state = searchParams.get("state");
-
+  const location = searchParams.get("location");
+  const dateString = searchParams.get("dates");
   const [hotels, setHotels] = useState<IHotelDao[]>([]);
   const [selectedHotel, setSelectedHotel] = useState<IHotelDao | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -19,17 +18,17 @@ const DetailsContent = () => {
   useEffect(() => {
     const fetchByLocation = async () => {
       const hotelsByLocation = await HotelService.getHotelsByLocation(
-        `${state},${country}`
+        location!
       );
       setHotels(hotelsByLocation);
     };
-    if (country && state) {
+    if (location) {
       fetchByLocation();
     }
     return () => {
       setHotels([]);
     };
-  }, [country, state]);
+  }, [location]);
 
   const handleBooking = (hotel: IHotelDao) => {
     setSelectedHotel(hotel);
@@ -39,7 +38,7 @@ const DetailsContent = () => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-[2rem] ml-[4%]">
-        Hotels in {state}, {country}
+        Hotels in {location}
       </h1>
 
       {hotels.length === 0 ? (

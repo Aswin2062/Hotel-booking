@@ -3,7 +3,7 @@ import { useState } from "react";
 import { HotelJSON } from "@/components/reusable";
 import { THotel } from "@/dao";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
-import HotelForm from "../form";
+import HotelForm from "../../components/Form";
 
 const EditDetails = () => {
   const [hotels, setHotels] = useState<THotel[]>(

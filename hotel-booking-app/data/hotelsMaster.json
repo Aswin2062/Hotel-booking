@@ -20,7 +20,7 @@
     "latitude": 12.568135,
     "checkin": "2:00 PM",
     "checkout": "11:30 AM",
-    "numberrooms": 160,
+    "numberrooms": 10,
     "numberfloors": null,
     "yearopened": 2000,
     "yearrenovated": 2018,
@@ -39,7 +39,11 @@
       "http://pix4.agoda.net/hotelimages/1/-1/59241704e99027895aa6293d734c9fb1.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/1/-1/fce5d70fac02fcb7aa25f31dd25850a8.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/1/-1/7952a908de348304417552246f9039de.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 166,
+    "deluxeRate": 181,
+    "suiteRate": 196,
+    "penthouseRate": 211
   },
   {
     "hotel_id": 6,
@@ -81,7 +85,11 @@
       "http://pix5.agoda.net/hotelimages/6/6/6_0905131455001101926.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/6/6/6_0905131455001101927.jpg?s=312x",
       "http://pix4.agoda.net/hotelimages/6/6/6_0905131455001101930.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 144,
+    "deluxeRate": 159,
+    "suiteRate": 174,
+    "penthouseRate": 189
   },
   {
     "hotel_id": 10,
@@ -105,7 +113,7 @@
     "latitude": 36.716057,
     "checkin": "1:00 PM",
     "checkout": "12:00 PM",
-    "numberrooms": 132,
+    "numberrooms": 10,
     "numberfloors": null,
     "yearopened": null,
     "yearrenovated": null,
@@ -124,7 +132,11 @@
       "http://pix5.agoda.net/hotelimages/10/10/10_13051721000012487062.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/10/10/10_13051721000012487063.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/10/10/10_13051721010012487064.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 83,
+    "deluxeRate": 98,
+    "suiteRate": 113,
+    "penthouseRate": 128
   },
   {
     "hotel_id": 13,
@@ -167,7 +179,11 @@
       "http://pix5.agoda.net/hotelimages/13/13/13_15072020200032641185.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/13/13/13_15072020200032641186.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/13/0/ff8100c85955522a0289e5c71329a17a.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 66,
+    "deluxeRate": 81,
+    "suiteRate": 96,
+    "penthouseRate": 111
   },
   {
     "hotel_id": 15,
@@ -190,7 +206,7 @@
     "latitude": 55.947063,
     "checkin": "3:00 PM",
     "checkout": "12:00 PM",
-    "numberrooms": 269,
+    "numberrooms": 25,
     "numberfloors": null,
     "yearopened": null,
     "yearrenovated": null,
@@ -210,7 +226,11 @@
       "http://pix2.agoda.net/hotelimages/15/15/15_17091312040056285473.jpg?s=312x",
       "http://pix4.agoda.net/hotelimages/15/15/15_17091312040056285476.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/15/15/15_17091312040056285477.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 185,
+    "deluxeRate": 200,
+    "suiteRate": 215,
+    "penthouseRate": 230
   },
   {
     "hotel_id": 16,
@@ -233,7 +253,7 @@
     "latitude": 22.277779,
     "checkin": "2:00 PM",
     "checkout": "12:00 PM",
-    "numberrooms": 173,
+    "numberrooms": 17,
     "numberfloors": 18,
     "yearopened": null,
     "yearrenovated": 2007,
@@ -252,7 +272,11 @@
       "http://pix4.agoda.net/hotelimages/16/16/16_13022217540010401585.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/16/16/16_13102910330017213949.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/16/16/16_15121810140038604781.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 428,
+    "deluxeRate": 443,
+    "suiteRate": 458,
+    "penthouseRate": 473
   },
   {
     "hotel_id": 17,
@@ -295,7 +319,11 @@
       "http://pix3.agoda.net/hotelimages/17/17/17_0912182150001859572.jpg?s=312x",
       "http://pix3.agoda.net/hotelimages/17/17/17_0912182150001859573.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/17/17/17_0912182150001859577.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 78,
+    "deluxeRate": 93,
+    "suiteRate": 108,
+    "penthouseRate": 123
   },
   {
     "hotel_id": 18,
@@ -318,7 +346,7 @@
     "latitude": 22.125391,
     "checkin": "3:00 PM",
     "checkout": "12:00 PM",
-    "numberrooms": 208,
+    "numberrooms": 20,
     "numberfloors": 8,
     "yearopened": 1993,
     "yearrenovated": 2014,
@@ -337,7 +365,11 @@
       "http://pix4.agoda.net/hotelimages/18/18/18_121122143051695.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/18/18/18_121122143052132.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/18/18/18_121122143052678.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 125,
+    "deluxeRate": 140,
+    "suiteRate": 155,
+    "penthouseRate": 170
   },
   {
     "hotel_id": 25,
@@ -360,7 +392,7 @@
     "latitude": -36.848387,
     "checkin": "3:00 PM",
     "checkout": "11:00 AM",
-    "numberrooms": 323,
+    "numberrooms": 32,
     "numberfloors": 8,
     "yearopened": 1996,
     "yearrenovated": null,
@@ -380,7 +412,11 @@
       "http://pix5.agoda.net/hotelimages/25/25/25_15062308460030331423.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/25/25/25_15062308460030331424.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/25/25/25_15062308460030331425.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 117,
+    "deluxeRate": 132,
+    "suiteRate": 147,
+    "penthouseRate": 162
   },
   {
     "hotel_id": 33,
@@ -408,7 +444,7 @@
     "yearopened": null,
     "yearrenovated": null,
     "overview": "Located in Le Lac, Pullman Bordeaux Lac is a perfect starting point from which to explore Bordeaux. Offering a variety of facilities and services, the hotel provides all you need for a good night's sleep. Casino, 24-hour front desk, facilities for disabled guests, luggage storage, Wi-Fi in public areas are just some of the facilities on offer. Each guestroom is elegantly furnished and equipped with handy amenities. To enhance guests' stay, the hotel offers recreational facilities such as fitness center, golf course (within 3 km), outdoor pool, massage, solarium. Pullman Bordeaux Lac is an excellent choice from which to explore Bordeaux or to simply relax and rejuvenate.",
-    "rates_from": 136,
+    "rates_from": 13.6,
     "continent_id": 4,
     "continent_name": "Europe",
     "city_id": 12838,
@@ -422,7 +458,11 @@
       "http://pix4.agoda.net/hotelimages/33/33/33_17080709240054945185.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/33/33/33_17080709240054945186.jpg?s=312x",
       "http://pix3.agoda.net/hotelimages/33/33/33_17080709240054945187.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 13.6,
+    "deluxeRate": 15.1,
+    "suiteRate": 16.6,
+    "penthouseRate": 18.1
   },
   {
     "hotel_id": 34,
@@ -465,7 +505,11 @@
       "http://pix5.agoda.net/hotelimages/34/34/34_0912031414001753274.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/34/34/34_0912031414001753275.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/34/34/34_0912190835001951320.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 75,
+    "deluxeRate": 90,
+    "suiteRate": 105,
+    "penthouseRate": 120
   },
   {
     "hotel_id": 36,
@@ -507,7 +551,11 @@
       "http://pix1.agoda.net/hotelimages/36/36/36_13121613040017908699.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/36/36/36_13121613040017908703.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/36/36/36_16060914140043329983.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 73,
+    "deluxeRate": 88,
+    "suiteRate": 103,
+    "penthouseRate": 118
   },
   {
     "hotel_id": 37,
@@ -549,7 +597,11 @@
       "http://pix5.agoda.net/hotelimages/37/37/37_080913000100175992.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/37/37/37_080913000100175994.jpg?s=312x",
       "http://pix4.agoda.net/hotelimages/37/37/37_080913000100175995.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 45,
+    "deluxeRate": 60,
+    "suiteRate": 75,
+    "penthouseRate": 90
   },
   {
     "hotel_id": 38,
@@ -572,7 +624,7 @@
     "latitude": 10.397937,
     "checkin": "3:00 PM",
     "checkout": "1:00 PM",
-    "numberrooms": 363,
+    "numberrooms": 36,
     "numberfloors": 7,
     "yearopened": 1941,
     "yearrenovated": 2010,
@@ -592,7 +644,11 @@
       "http://pix2.agoda.net/hotelimages/38/38/38_0912190005001879680.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/38/38/38_0912190005001879681.jpg?s=312x",
       "http://pix4.agoda.net/hotelimages/38/38/38_0912190005001879683.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 123,
+    "deluxeRate": 138,
+    "suiteRate": 153,
+    "penthouseRate": 168
   },
   {
     "hotel_id": 54,
@@ -615,7 +671,7 @@
     "latitude": 30.258862,
     "checkin": "2:00 PM",
     "checkout": "12:00 PM",
-    "numberrooms": 245,
+    "numberrooms": 25,
     "numberfloors": 8,
     "yearopened": 1997,
     "yearrenovated": 2010,
@@ -634,7 +690,11 @@
       "http://pix3.agoda.net/hotelimages/54/54/54_16053115400042940736.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/54/-1/1d6641875edae6bfdb4a46b113aa95cb.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/54/-1/bb7b19c0413bfb89d67ae49a0d818837.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 74,
+    "deluxeRate": 89,
+    "suiteRate": 104,
+    "penthouseRate": 119
   },
   {
     "hotel_id": 59,
@@ -657,7 +717,7 @@
     "latitude": 34.694649,
     "checkin": "3:00 PM",
     "checkout": "11:00 AM",
-    "numberrooms": 235,
+    "numberrooms": 25,
     "numberfloors": 12,
     "yearopened": 1986,
     "yearrenovated": 2017,
@@ -676,7 +736,11 @@
       "http://pix5.agoda.net/hotelimages/59/59/59_16101013470047578644.jpg?s=312x",
       "http://pix4.agoda.net/hotelimages/59/59/59_16101013470047578645.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/59/59/59_16101013470047578646.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 58,
+    "deluxeRate": 73,
+    "suiteRate": 88,
+    "penthouseRate": 103
   },
   {
     "hotel_id": 63,
@@ -699,7 +763,7 @@
     "latitude": 44.425246,
     "checkin": "3:00 PM",
     "checkout": "11:00 AM",
-    "numberrooms": 84,
+    "numberrooms": 48,
     "numberfloors": 4,
     "yearopened": null,
     "yearrenovated": null,
@@ -718,7 +782,11 @@
       "http://pix2.agoda.net/hotelimages/63/63/63_17091411370056344352.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/63/63/63_17091411370056344388.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/63/63/63_17091411370056344409.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 118,
+    "deluxeRate": 133,
+    "suiteRate": 148,
+    "penthouseRate": 163
   },
   {
     "hotel_id": 66,
@@ -741,8 +809,8 @@
     "latitude": 31.167866,
     "checkin": "2:00 PM",
     "checkout": "12:00 PM",
-    "numberrooms": 432,
-    "numberfloors": 30,
+    "numberrooms": 42,
+    "numberfloors": 6,
     "yearopened": 1999,
     "yearrenovated": null,
     "overview": "Everbright Convention & Exhibition Centre Internat is perfectly located for both business and leisure guests in Shanghai. Both business travelers and tourists can enjoy the hotel's facilities and services. Service-minded staff will welcome and guide you at the Everbright Convention & Exhibition Centre Internat. Designed for comfort, selected guestrooms offer television LCD/plasma screen, internet access – wireless, non smoking rooms, air conditioning, desk to ensure a restful night. Access to the hotel's hot tub, private beach, fitness center, sauna, golf course (on site) will further enhance your satisfying stay. Friendly staff, great facilities and close proximity to all that Shanghai has to offer are three great reasons you should stay at Everbright Convention & Exhibition Centre Internat.",
@@ -760,7 +828,11 @@
       "http://pix4.agoda.net/hotelimages/66/66/66_14061212400019807656.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/66/66/66_14061212400019807657.jpg?s=312x",
       "http://pix3.agoda.net/hotelimages/66/66/66_14061212400019807658.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 166,
+    "deluxeRate": 181,
+    "suiteRate": 196,
+    "penthouseRate": 211
   },
   {
     "hotel_id": 69,
@@ -802,7 +874,11 @@
       "http://pix3.agoda.net/hotelimages/69/69/69_17080817270055081893.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/69/69/69_17080817270055081908.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/69/69/69_17080817270055081910.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 200,
+    "deluxeRate": 215,
+    "suiteRate": 230,
+    "penthouseRate": 245
   },
   {
     "hotel_id": 71,
@@ -825,8 +901,8 @@
     "latitude": 43.703529,
     "checkin": "3:00 PM",
     "checkout": "12:00 PM",
-    "numberrooms": 101,
-    "numberfloors": 5,
+    "numberrooms": 15,
+    "numberfloors": 3,
     "yearopened": null,
     "yearrenovated": null,
     "overview": "Hotel Apogia Nice is conveniently located in the popular Nice City Center area. Offering a variety of facilities and services, the hotel provides all you need for a good night's sleep. Facilities like free Wi-Fi in all rooms, daily housekeeping, wheelchair accessible, 24-hour front desk, facilities for disabled guests are readily available for you to enjoy. Designed for comfort, selected guestrooms offer television LCD/plasma screen, internet access – wireless, internet access – wireless (complimentary), non smoking rooms, air conditioning to ensure a restful night. The hotel offers various recreational opportunities. Hotel Apogia Nice is an excellent choice from which to explore Nice or to simply relax and rejuvenate.",
@@ -844,7 +920,11 @@
       "http://pix1.agoda.net/hotelimages/71/71/71_14110514240023196635.jpg?s=312x",
       "http://pix3.agoda.net/hotelimages/71/71/71_14110514240023196639.jpg?s=312x",
       "http://pix5.agoda.net/hotelimages/71/71/71_14110514240023196643.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 61,
+    "deluxeRate": 76,
+    "suiteRate": 91,
+    "penthouseRate": 106
   },
   {
     "hotel_id": 75,
@@ -867,8 +947,8 @@
     "latitude": 36.112019,
     "checkin": "4:00 PM",
     "checkout": "11:00 AM",
-    "numberrooms": 2916,
-    "numberfloors": 34,
+    "numberrooms": 29,
+    "numberfloors": 4,
     "yearopened": 1999,
     "yearrenovated": null,
     "overview": "Paris Las Vegas Hotel is perfectly located for both business and leisure guests in Las Vegas (NV). The hotel offers a wide range of amenities and perks to ensure you have a great time. Service-minded staff will welcome and guide you at the Paris Las Vegas Hotel. Television LCD/plasma screen, carpeting, linens, mirror, towels can be found in selected guestrooms. The hotel's peaceful atmosphere extends to its recreational facilities which include fitness center, sauna, outdoor pool, spa, steamroom. Paris Las Vegas Hotel combines warm hospitality with a lovely ambiance to make your stay in Las Vegas (NV) unforgettable.",
@@ -886,7 +966,11 @@
       "http://pix1.agoda.net/hotelimages/75/75/75_14041902380019131757.jpg?s=312x",
       "http://pix3.agoda.net/hotelimages/75/75/75_16063004510044267771.jpg?s=312x",
       "http://pix1.agoda.net/hotelimages/75/75/75_16063004510044267772.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 129,
+    "deluxeRate": 144,
+    "suiteRate": 159,
+    "penthouseRate": 174
   },
   {
     "hotel_id": 78,
@@ -909,7 +993,7 @@
     "latitude": 50.820938,
     "checkin": "3:00 PM",
     "checkout": "12:00 PM",
-    "numberrooms": 80,
+    "numberrooms": 50,
     "numberfloors": null,
     "yearopened": 1978,
     "yearrenovated": 2004,
@@ -928,6 +1012,10 @@
       "http://pix1.agoda.net/hotelimages/78/78/78_16051514190042342598.jpg?s=312x",
       "http://pix2.agoda.net/hotelimages/78/78/78_16051514190042342599.jpg?s=312x",
       "http://pix4.agoda.net/hotelimages/78/78/78_16051514190042342614.jpg?s=312x"
-    ]
+    ],
+    "standardRate": 80,
+    "deluxeRate": 95,
+    "suiteRate": 110,
+    "penthouseRate": 125
   }
 ]

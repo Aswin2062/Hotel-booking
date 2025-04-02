@@ -4,10 +4,13 @@ import HotelModel, { IHotel } from "@/models/hotels";
 
 export async function addHotelMasterData(): Promise<void> {
   try {
-    const hotelMasterData = HotelMasterData as IHotel[];
-    await HotelModel.bulkSave(
-      hotelMasterData.map((item) => new HotelModel({ ...item }))
-    );
+    const count = await HotelModel.countDocuments();
+    if (count === 0) {
+      const hotelMasterData = HotelMasterData as IHotel[];
+      await HotelModel.bulkSave(
+        hotelMasterData.map((item) => new HotelModel({ ...item }))
+      );
+    }
   } catch (error) {
     console.error(`Failed to add default hotel master data due to ${error}`);
   }
@@ -57,7 +60,7 @@ export async function getHotelsByStateAndCountry(
 ): Promise<IHotelDao[]> {
   try {
     const response = await HotelModel.find({ state, country }) // Filter by state and country
-      .sort({ hotel_name: 1 }); // Sort by hotel_name in ascending order (1 for ascending, -1 for descending)
+      .sort({ discount: -1, hotel_name: 1 }); // Sort by discount first in descending and hotel_name in ascending order
     return updateDiscount(response);
   } catch (error) {
     console.error(`Failed to get hotels by state and country  due to ${error}`);

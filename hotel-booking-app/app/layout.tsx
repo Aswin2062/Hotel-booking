@@ -2,8 +2,8 @@ import type React from "react";
 import { Inter } from "next/font/google";
 import { AuthProvider } from "../components/auth-provider";
 import "./globals.css";
-import Navbar from "./navbar";
-import Footer from "./footer";
+import Navbar from "../components/navbar";
+import Footer from "../components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 

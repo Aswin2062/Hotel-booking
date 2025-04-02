@@ -2,25 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  FaSearch,
-  FaUser,
-  FaCalendarAlt,
-  FaMapMarkerAlt,
-} from "react-icons/fa";
-import CardDetails from "../card";
+import { FaSearch, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
+import CardDetails from "../../components/Card";
 import BgImage from "@/public/vacation.jpg";
 import Category from "../../components/Category";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { HotelService } from "@/services/HotelService";
+import Swal from "sweetalert2";
 
 const HomePage = () => {
   const router = useRouter();
   const [location, setLocation] = useState("");
   const [locations, setLocations] = useState<string[]>([]);
   const [dates, setDates] = useState<[Date, Date] | null>(null);
-  const [travelers, setTravelers] = useState(2);
   const [filteredLocations, setFilteredLocations] = useState<string[]>([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -47,19 +42,25 @@ const HomePage = () => {
   };
 
   const handleSearch = () => {
-    if (!location) {
-      alert("Please select a location.");
+    if (!location.trim().length) {
+      Swal.fire({
+        icon: "error",
+        title: "Search Failure",
+        text: "Please Select Location",
+        toast: true,
+        position: "top-right",
+        timer: 1000,
+        showConfirmButton: false,
+      });
       return;
     }
-
-    const [state, country] = location.split(", ");
-    if (!state || !country) {
-      alert("Invalid location format.");
-      return;
+    var dateSearchString = "";
+    if (dates != null) {
+      dateSearchString = `${dates[0].getTime()}-${dates[1].getTime()}`;
     }
-    const searchUrl = `/details?state=${encodeURIComponent(
-      state
-    )}&country=${encodeURIComponent(country)}`;
+    const searchUrl = `/details?location=${encodeURIComponent(location)}${
+      dateSearchString.length ? `&dates=${dateSearchString}` : ""
+    }`;
     router.push(searchUrl);
   };
 
@@ -67,10 +68,12 @@ const HomePage = () => {
     const fetchLocations = async () => {
       const locations = await HotelService.getLocations();
       setLocations(locations);
+      setFilteredLocations(locations);
     };
     fetchLocations();
     return () => {
       setLocations([]);
+      setFilteredLocations([]);
     };
   }, []);
 
@@ -90,10 +93,10 @@ const HomePage = () => {
           </h1>
         </div>
 
-        <div className="bg-white rounded-xl p-4 shadow-lg flex flex-col md:flex-row gap-2 mt-4 md:gap-4 w-full max-w-3xl relative">
+        <div className="bg-white rounded-xl p-4 shadow-lg flex flex-col md:flex-row gap-2 mt-4 md:gap-4 w-full max-w-[60vw] relative">
           <div className="relative w-full">
             <div
-              className="flex items-center border rounded-lg px-3 py-2 cursor-pointer"
+              className={`flex items-center border rounded-lg px-3 py-2 cursor-pointer`}
               onClick={() => setDropdownOpen(true)}
             >
               <FaMapMarkerAlt className="text-gray-500 mr-2" />
@@ -103,6 +106,7 @@ const HomePage = () => {
                 value={location}
                 onChange={handleLocationChange}
                 className="w-full outline-none text-gray-700"
+                required
               />
             </div>
 
@@ -140,6 +144,7 @@ const HomePage = () => {
                 }
                 readOnly
                 className="w-full outline-none text-gray-700 cursor-pointer"
+                required
               />
             </div>
 
@@ -155,17 +160,6 @@ const HomePage = () => {
                 />
               </div>
             )}
-          </div>
-
-          <div className="flex items-center border rounded-lg px-3 py-2 w-full">
-            <FaUser className="text-gray-500 mr-2" />
-            <input
-              type="number"
-              min="1"
-              value={travelers}
-              onChange={(e) => setTravelers(Number(e.target.value))}
-              className="w-full outline-none text-gray-700"
-            />
           </div>
 
           <button

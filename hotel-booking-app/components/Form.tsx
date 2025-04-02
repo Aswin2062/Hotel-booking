@@ -141,7 +141,7 @@ const HotelForm = ({
       <div className="flex justify-end mt-4">
         <button
           onClick={isAdding ? handleAddNewHotel : handleSaveEdit}
-          disabled={!isFormValid()} 
+          disabled={!isFormValid()}
           className={`bg-green-500 text-white flex flex-row items-center justify-between px-4 py-2 rounded hover:bg-green-600 ${
             !isFormValid() ? "opacity-50 cursor-not-allowed" : ""
           }`}

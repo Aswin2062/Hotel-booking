@@ -11,3 +11,9 @@ declare module "next-auth" {
     role?: UserRoles;
   }
 }
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}

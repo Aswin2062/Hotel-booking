@@ -36,6 +36,10 @@ export interface IHotel extends Document {
   rates_currency: string;
   photos: string[];
   discount?: number;
+  standardRate?: number;
+  deluxeRate?: number;
+  suiteRate?: number;
+  penthouseRate?: number;
 }
 
 const hotelSchema = new Schema<IHotel>(
@@ -75,6 +79,10 @@ const hotelSchema = new Schema<IHotel>(
     rates_currency: { type: String, required: true },
     photos: { type: [String], required: true },
     discount: { type: Number },
+    standardRate: { type: Number },
+    deluxeRate: { type: Number },
+    suiteRate: { type: Number },
+    penthouseRate: { type: Number },
   },
   {
     timestamps: true,
@@ -82,6 +90,6 @@ const hotelSchema = new Schema<IHotel>(
 );
 
 const HotelModel =
-  mongoose.models.Hotel || mongoose.model<IHotel>("Hotel", hotelSchema);
+  mongoose.models?.Hotel || mongoose.model<IHotel>("Hotel", hotelSchema);
 
 export default HotelModel;

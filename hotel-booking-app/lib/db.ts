@@ -1,5 +1,6 @@
 import mongoose, { Connection } from "mongoose";
 import { addHotelMasterData } from "./hotels";
+import { addRoomsMasterData } from "./room";
 let cachedConnection: Connection | null = null;
 
 export async function connectToMongoDB() {
@@ -20,5 +21,6 @@ export async function connectToMongoDB() {
 }
 
 async function addDefaultRecords() {
-  return Promise.all([addHotelMasterData()]);
+  await addHotelMasterData();
+  await addRoomsMasterData();
 }

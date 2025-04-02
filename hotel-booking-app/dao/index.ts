@@ -1,4 +1,6 @@
+import { PaymentStatus } from "@/models/booking";
 import { IHotel } from "@/models/hotels";
+import { RoomType } from "@/models/room";
 
 export type TResultResponse = {
   message: string;
@@ -68,4 +70,78 @@ export interface IHotelDao extends IHotel {
   discountPercentage?: number;
   discountAmount?: number;
   discountedRate?: number;
+}
+
+export interface IRoomMasterDao {
+  roomId: number;
+  hotelId: number;
+  type: RoomType;
+  roomNo: string;
+}
+export interface IBookingDao {
+  hotelId: number;
+  checkIn: string;
+  checkOut: string;
+  guests: "1";
+  name: "";
+  email: "";
+  phone: "";
+  address: "";
+}
+
+export interface IAvailabilityRequest {
+  hotelPk: string;
+  checkIn: string;
+  checkout: string;
+}
+
+export interface IAvailabilityResponse {
+  Standard: { count: number; personPerRoom: number; ratePerNight: number };
+  Deluxe: { count: number; personPerRoom: number; ratePerNight: number };
+  Suite: { count: number; personPerRoom: number; ratePerNight: number };
+  Penthouse: { count: number; personPerRoom: number; ratePerNight: number };
+}
+
+export interface IBookingFormFields {
+  checkIn: string;
+  checkOut: string;
+  guests: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  Standard: string;
+  Deluxe: string;
+  Suite: string;
+  Penthouse: string;
+}
+
+export interface IBookingRequest {
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  Standard?: number;
+  Deluxe?: number;
+  Suite?: number;
+  Penthouse?: number;
+  standardRate: number;
+  deluxeRate: number;
+  suiteRate: number;
+  penthouseRate: number;
+  discount: number;
+  paymentId?: string;
+  hotelId: string;
+  paymentStatus?: PaymentStatus;
+}
+
+export interface IBookingResponse {
+  bookingId: string;
+  Standard?: string[];
+  Deluxe?: string[];
+  Suite?: string[];
+  Penthouse?: string[];
 }

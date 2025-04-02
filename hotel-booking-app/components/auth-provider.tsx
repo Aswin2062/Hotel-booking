@@ -1,7 +1,13 @@
 "use client";
 
 import type React from "react";
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signIn, signOut, SessionProvider } from "next-auth/react";
 import { LoginService } from "../services/LoginService";
@@ -23,7 +29,11 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthActionsProvider({ children }: { children: React.ReactNode }) {
+export function AuthActionsProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { data, status } = useSession();
@@ -60,7 +70,10 @@ export function AuthActionsProvider({ children }: { children: React.ReactNode })
   }, []);
 
   const signUp = useCallback(async (email: string, password: string) => {
-    const response: ISignUpResponse | null = await LoginService.signUp(email, password);
+    const response: ISignUpResponse | null = await LoginService.signUp(
+      email,
+      password
+    );
     if (response) {
       response.result
         ? toast.success(`Account created successfully. Welcome, ${email}!`)
@@ -76,7 +89,11 @@ export function AuthActionsProvider({ children }: { children: React.ReactNode })
     toast.success("You have been signed out successfully.");
   }, []);
 
-  return <AuthContext.Provider value={{ user, logIn, signUp, logOut, loading }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, logIn, signUp, logOut, loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export const useAuth = () => {
