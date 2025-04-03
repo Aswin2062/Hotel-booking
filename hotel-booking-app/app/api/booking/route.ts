@@ -1,6 +1,6 @@
 import { IBookingRequest, TResultResponse } from "@/dao";
 import { authOptions } from "@/lib/auth";
-import { saveBooking } from "@/lib/booking";
+import { getBookings, saveBooking } from "@/lib/booking";
 import { getServerSession } from "next-auth/next";
 import { NextRequest } from "next/server";
 
@@ -20,6 +20,22 @@ export async function POST(req: NextRequest) {
     }
   } catch (e) {
     console.error(`Failed to save booking for ${body} by  due to ${e}`);
+    return Response.json(
+      { message: "Please try again later", result: false } as TResultResponse,
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (session?.userId) {
+      const response = await getBookings(session.userId!);
+      return Response.json(response, { status: 200 });
+    }
+  } catch (e) {
+    console.error(`Failed to get bookings due to ${e}`);
     return Response.json(
       { message: "Please try again later", result: false } as TResultResponse,
       { status: 500 }

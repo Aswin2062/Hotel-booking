@@ -88,7 +88,7 @@ const HomePage = () => {
         }}
       >
         <div className="w-[70%] h-[100px] bg-white rounded-4xl flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-semibold text-black">
+          <h1 className="lg:text-3xl md:text-4xl sm:text-2xl xs:text-xl font-semibold text-black">
             Relax, you’re booking at Hotel Finder
           </h1>
         </div>

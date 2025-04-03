@@ -2,6 +2,7 @@ import {
   IAvailabilityResponse,
   IBookingRequest,
   IBookingResponse,
+  IGetBookingsResponse,
 } from "@/dao";
 import BookingModel, {
   BookingStatus,
@@ -99,7 +100,7 @@ async function getAvailableRoomDetails(
     // Step 2: Look up bookings for each room and join them
     {
       $lookup: {
-        from: "Bookings", // collection name for Booking model
+        from: "bookings", // collection name for Booking model
         localField: "_id", // Room's _id
         foreignField: "allocatedRooms", // Booking's allocatedRooms
         as: "bookings", // Output array containing matching bookings
@@ -118,7 +119,7 @@ async function getAvailableRoomDetails(
                   // Check if booking period overlaps with the requested period
                   { $lte: ["$$booking.checkin", checkout] }, // Booking checkout is before requested checkout
                   { $gte: ["$$booking.checkout", checkin] }, // Booking checkout is after requested checkin
-                  { $eq: ["$$booking.status", "1"] }, // Booking Status should be 1 for success
+                  { $eq: ["$$booking.bookingStatus", "1"] }, // Booking Status should be 1 for success
                 ],
               },
             },
@@ -346,4 +347,22 @@ export async function updatePaymentStatus(
   }
   await booking.save();
   return null;
+}
+
+export async function getBookings(userId: string, page: number = 1, limit: number = 20): Promise<IGetBookingsResponse> {
+  const skip = (page - 1) * limit;
+    
+    const bookings = await BookingModel.find({bookedUserId: new Types.ObjectId(userId)})
+      .skip(skip)    // Skip previous pages
+      .limit(limit)  // Limit results per page
+      .sort({ updatedAt: -1 }); 
+
+    const totalBookings = await BookingModel.countDocuments({bookedUserId: new Types.ObjectId(userId)}); // Get total count for pagination
+
+    return {
+      bookings,
+      totalPages: Math.ceil(totalBookings / limit),
+      currentPage: page,
+      totalBookings,
+    };
 }

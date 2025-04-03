@@ -1,4 +1,4 @@
-import { PaymentStatus } from "@/models/booking";
+import { IBooking, PaymentStatus } from "@/models/booking";
 import { IHotel } from "@/models/hotels";
 import { RoomType } from "@/models/room";
 
@@ -78,16 +78,6 @@ export interface IRoomMasterDao {
   type: RoomType;
   roomNo: string;
 }
-export interface IBookingDao {
-  hotelId: number;
-  checkIn: string;
-  checkOut: string;
-  guests: "1";
-  name: "";
-  email: "";
-  phone: "";
-  address: "";
-}
 
 export interface IAvailabilityRequest {
   hotelPk: string;
@@ -144,4 +134,11 @@ export interface IBookingResponse {
   Deluxe?: string[];
   Suite?: string[];
   Penthouse?: string[];
+}
+
+export interface IGetBookingsResponse {
+  bookings: IBooking[],
+  totalPages: number,
+  currentPage: number,
+  totalBookings: number
 }

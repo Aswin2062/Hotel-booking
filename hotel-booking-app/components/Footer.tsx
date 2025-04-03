@@ -37,7 +37,7 @@ const Footer = () => {
             📍 123 Hotel Street, City, Country
           </p>
           <p className="text-gray-400 text-sm">📞 +1 234 567 890</p>
-          <p className="text-gray-400 text-sm">📧 support@hotelbooking.com</p>
+          <p className="text-gray-400 text-sm">📧 aswincharlie8877@gmail.com </p>
         </div>
       </div>
 

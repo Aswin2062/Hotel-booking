@@ -29,7 +29,7 @@ const makePayment = async (
     const discountAmount = (totalInINR * hotel.discount) / 100;
     totalInINR = totalInINR - discountAmount;
   }
-  totalInINR = totalInINR * 85.56 * 100;
+  totalInINR = (Number(totalInINR.toFixed(2)) * 86 * 100);
   const bookingResponse = await saveBooking(bookingInfo, hotel);
   if (typeof bookingResponse === "string") {
     Swal.fire({
