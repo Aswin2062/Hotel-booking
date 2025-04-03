@@ -1,4 +1,4 @@
-import { IBooking, PaymentStatus } from "@/models/booking";
+import { BookingStatus, IBooking, PaymentStatus } from "@/models/booking";
 import { IHotel } from "@/models/hotels";
 import { RoomType } from "@/models/room";
 
@@ -137,8 +137,14 @@ export interface IBookingResponse {
 }
 
 export interface IGetBookingsResponse {
-  bookings: IBooking[],
+  bookings: (IBooking & {hotelInfo: IHotelDao}) [],
   totalPages: number,
   currentPage: number,
   totalBookings: number
+}
+
+export interface IGetBookingRequestParams {
+  filter?: {status: BookingStatus},
+  sortBy: 'updatedAt' | 'hotelName' | 'location',
+  pageNo: number
 }

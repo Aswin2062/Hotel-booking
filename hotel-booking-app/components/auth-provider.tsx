@@ -37,7 +37,6 @@ export function AuthActionsProvider({
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { data, status } = useSession();
-  const router = useRouter();
 
   useEffect(() => {
     if (data?.userId && data.user) {

@@ -145,8 +145,8 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center px-4 sm:px-0">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl relative">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center px-4 sm:px-0 z-50">
+      <div className="bg-white p-6 rounded-lg h-[90%] overflow-auto shadow-lg w-full max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl relative ">
         <button
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-lg"
           onClick={onClose}
@@ -161,7 +161,7 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
           {hotel.addressline1}, {hotel.city}, {hotel.country}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        <div className="flex flex-col sm:flex-row gap-4 mt-4 h-[80%] overflow-auto ">
           <div className="w-full sm:w-1/2">
             {hotel.photos.length > 0 ? (
               <div className="grid grid-cols-2 gap-2">
@@ -460,16 +460,16 @@ const DetailsPopup: React.FC<DetailsPopupProps> = ({ hotel, onClose }) => {
                   <p className="text-sm text-red-600 mt-1">{errors.address}</p>
                 )}
               </div>
-
-              <button
-                type="submit"
-                className="w-full mt-3 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              >
-                Confirm Booking
-              </button>
             </form>
           </div>
         </div>
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="w-full mt-3 p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Confirm Booking
+        </button>
       </div>
     </div>
   );

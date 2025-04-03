@@ -6,7 +6,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session } = useSession() as { data: any };
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   if (!session) return null;
 
@@ -37,35 +37,39 @@ const Navbar = () => {
               Home
             </Link>
           </li>
-          <li>
-            <Link
-              href=""
-              className="block py-2 px-4 text-gray-700 hover:text-blue-500"
-            >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link
-              href=""
-              className="block py-2 px-4 text-gray-700 hover:text-blue-500"
-            >
-              Contact
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/myBookings"
-              className="block py-2 px-4 text-gray-700 hover:text-blue-500"
-            >
-              My Bookings
-            </Link>
-          </li>
+          {session?.role !== "ADMIN" && (
+            <>
+              <li>
+                <Link
+                  href=""
+                  className="block py-2 px-4 text-gray-700 hover:text-blue-500"
+                >
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href=""
+                  className="block py-2 px-4 text-gray-700 hover:text-blue-500"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/myBookings"
+                  className="block py-2 px-4 text-gray-700 hover:text-blue-500"
+                >
+                  My Bookings
+                </Link>
+              </li>
+            </>
+          )}
 
           {session?.role === "ADMIN" && (
             <li>
               <Link
-                href="/editDetails"
+                href="/manage"
                 className="block py-2 px-4 text-gray-700 hover:text-blue-500 cursor-pointer"
               >
                 Manage

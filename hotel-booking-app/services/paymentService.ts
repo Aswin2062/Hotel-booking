@@ -3,33 +3,38 @@ import Swal from "sweetalert2";
 import { BookingService } from "./BookingService";
 import sendEmail from "./mailServer";
 
+export const getPaymentAmountDetails = (checkIn: string, checkOut: string,  standardRate?: number, deluxeRate?: number, suiteRate?: number, penthouseRate?: number, Standard?: string, Deluxe?: string, Suite?: string, Penthouse?: string, discount?: number) => {
+  const noOfNights =
+  (new Date(checkOut).getTime() -
+    new Date(checkIn).getTime()) /
+  (1000 * 60 * 60 * 24);
+const price =
+  (isNaN(Number(Standard)) ? 0 : Number(Standard)) *
+    (standardRate ?? 0) *
+    noOfNights +
+  (isNaN(Number(Deluxe)) ? 0 : Number(Deluxe)) *
+    (deluxeRate ?? 0) *
+    noOfNights +
+  (isNaN(Number(Suite)) ? 0 : Number(Suite)) *
+    (suiteRate ?? 0) *
+    noOfNights +
+  (isNaN(Number(Penthouse)) ? 0 : Number(Penthouse)) *
+    (penthouseRate ?? 0) *
+    noOfNights;
+let total = price;
+if (discount) {
+  const discountAmount = (total * discount) / 100;
+  total = total - discountAmount;
+}
+const totalInINR = (Number(total.toFixed(2)) * 86 * 100);
+return {totalInINR, total: Number(total.toFixed(2))};
+}
+
 const makePayment = async (
   bookingInfo: IBookingFormFields,
   hotel: IHotelDao
 ) => {
-  const noOfNights =
-    (new Date(bookingInfo.checkOut).getTime() -
-      new Date(bookingInfo.checkIn).getTime()) /
-    (1000 * 60 * 60 * 24);
-  const price =
-    (isNaN(Number(bookingInfo.Standard)) ? 0 : Number(bookingInfo.Standard)) *
-      (hotel.standardRate ?? 0) *
-      noOfNights +
-    (isNaN(Number(bookingInfo.Deluxe)) ? 0 : Number(bookingInfo.Deluxe)) *
-      (hotel.deluxeRate ?? 0) *
-      noOfNights +
-    (isNaN(Number(bookingInfo.Suite)) ? 0 : Number(bookingInfo.Suite)) *
-      (hotel.suiteRate ?? 0) *
-      noOfNights +
-    (isNaN(Number(bookingInfo.Penthouse)) ? 0 : Number(bookingInfo.Penthouse)) *
-      (hotel.penthouseRate ?? 0) *
-      noOfNights;
-  let totalInINR = price;
-  if (hotel.discount) {
-    const discountAmount = (totalInINR * hotel.discount) / 100;
-    totalInINR = totalInINR - discountAmount;
-  }
-  totalInINR = (Number(totalInINR.toFixed(2)) * 86 * 100);
+  const {totalInINR, total} = getPaymentAmountDetails(bookingInfo.checkIn, bookingInfo.checkOut, hotel.standardRate, hotel.deluxeRate, hotel.suiteRate, hotel.penthouseRate, bookingInfo.Standard, bookingInfo.Deluxe, bookingInfo.Suite, bookingInfo.Penthouse, hotel.discount)
   const bookingResponse = await saveBooking(bookingInfo, hotel);
   if (typeof bookingResponse === "string") {
     Swal.fire({
@@ -71,7 +76,9 @@ const makePayment = async (
       console.log(response);
       await updatePaymentStatus(
         bookingResponse.bookingId,
-        response.razorpay_payment_id
+        response.razorpay_payment_id,
+        total,
+        hotel.rates_currency
       );
       Swal.fire({
         icon: "success",
@@ -262,10 +269,12 @@ const saveBooking = async (
   return await BookingService.bookRooms(bookingDetails);
 };
 
-const updatePaymentStatus = async (bookingId: string, paymentId?: string) => {
+const updatePaymentStatus = async (bookingId: string, paymentId?: string, paymentAmount?: number, paymentCurrency?: string) => {
   const response = await BookingService.updatePaymentStatus(
     bookingId,
-    paymentId
+    paymentId,
+    paymentAmount,
+    paymentCurrency
   );
   if (typeof response === "string") {
     Swal.fire({
@@ -275,4 +284,5 @@ const updatePaymentStatus = async (bookingId: string, paymentId?: string) => {
     });
   }
 };
+
 export default makePayment;

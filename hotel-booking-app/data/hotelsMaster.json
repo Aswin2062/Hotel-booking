@@ -43,7 +43,8 @@
     "standardRate": 166,
     "deluxeRate": 181,
     "suiteRate": 196,
-    "penthouseRate": 211
+    "penthouseRate": 211,
+    "discount": 40
   },
   {
     "hotel_id": 6,

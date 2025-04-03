@@ -5,9 +5,11 @@ import { getServerSession } from "next-auth";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { bookingId, paymentId } = (await req.json()) as {
+  const { bookingId, paymentId, paymentAmount, paymentCurrency } = (await req.json()) as {
     bookingId: string;
     paymentId?: string;
+    paymentAmount?: number;
+    paymentCurrency?: string
   };
   try {
     const session = await getServerSession(authOptions);
@@ -15,7 +17,9 @@ export async function POST(req: NextRequest) {
       const response = await updatePaymentStatus(
         bookingId,
         session.userId!,
-        paymentId
+        paymentId,
+        paymentAmount,
+        paymentCurrency
       );
       if (typeof response === "string") {
         return Response.json(

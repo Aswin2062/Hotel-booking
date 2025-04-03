@@ -324,7 +324,9 @@ export async function saveBooking(
 export async function updatePaymentStatus(
   bookingId: string,
   userId: string,
-  paymnetId?: string
+  paymnetId?: string,
+  paymentAmount?: number,
+  paymentCurrency?: string
 ): Promise<string | null> {
   if (!bookingId.trim().length) {
     return "Invalid request";
@@ -338,6 +340,8 @@ export async function updatePaymentStatus(
   }
   if (paymnetId) {
     booking.paymentId = paymnetId;
+    booking.paymentAmount = paymentAmount;
+    booking.paymentCurrency = paymentCurrency;
   }
   booking.paymentStatus = !!paymnetId
     ? PaymentStatus.Completed
@@ -349,20 +353,60 @@ export async function updatePaymentStatus(
   return null;
 }
 
-export async function getBookings(userId: string, page: number = 1, limit: number = 20): Promise<IGetBookingsResponse> {
-  const skip = (page - 1) * limit;
-    
-    const bookings = await BookingModel.find({bookedUserId: new Types.ObjectId(userId)})
-      .skip(skip)    // Skip previous pages
-      .limit(limit)  // Limit results per page
-      .sort({ updatedAt: -1 }); 
-
-    const totalBookings = await BookingModel.countDocuments({bookedUserId: new Types.ObjectId(userId)}); // Get total count for pagination
+export async function getBookings(userId: string, sortBy?: string | null, pageNo: number = 1, statusFilter?: string | null, limit: number = 20): Promise<IGetBookingsResponse> {
+  const skip = (pageNo - 1) * limit;
+    let sort: {'hotelInfo.hotel_name'?: 1, 'updatedAt': -1, 'hotelInfo.state'?: 1, 'hotelInfo.country'?: 1} | null = null;
+    if (sortBy) {
+      if (sortBy === 'name') {
+        sort = {'hotelInfo.hotel_name': 1, 'updatedAt': -1}
+      } else if (sortBy === 'location') {
+        sort = {'hotelInfo.state': 1, 'hotelInfo.country': 1, 'updatedAt': -1}
+      } else {
+        sort = {'updatedAt': -1}
+      }
+    }
+    const pipeline: PipelineStage[] = [
+      {
+        $match: {
+          bookedUserId: new Types.ObjectId(
+            userId
+          ),
+          ...(statusFilter && {bookingStatus: statusFilter})
+        },
+      },
+      {
+        $lookup: {
+          from: "hotels", // The collection to join
+          localField: "hotel", // The field in the booking collection
+          foreignField: "_id", // The field in the hotel collection
+          as: "hotelInfo", // The output array name
+        },
+      },
+      {
+        $unwind: {
+          path: "$hotelInfo",
+        },
+      },
+      {
+        $sort: {
+          ...(sort && sort), updatedAt: -1
+        },
+      },
+      {
+        $skip: skip,
+      },
+      {
+        $limit: limit,
+      },
+    ];
+    console.log(pipeline);
+    const bookings = await BookingModel.aggregate(pipeline);
+    const totalBookings = await BookingModel.countDocuments({bookedUserId: new Types.ObjectId(userId), ...(statusFilter && {bookingStatus: statusFilter})}); // Get total count for pagination
 
     return {
       bookings,
       totalPages: Math.ceil(totalBookings / limit),
-      currentPage: page,
+      currentPage: pageNo,
       totalBookings,
     };
 }

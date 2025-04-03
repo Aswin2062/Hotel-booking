@@ -3,6 +3,8 @@ import {
   IAvailabilityResponse,
   IBookingRequest,
   IBookingResponse,
+  IGetBookingRequestParams,
+  IGetBookingsResponse,
 } from "@/dao";
 import { RoomType } from "@/models/room";
 
@@ -53,7 +55,9 @@ export const BookingService = {
 
   updatePaymentStatus: async (
     bookingId: string,
-    paymentId?: string
+    paymentId?: string,
+    paymentAmount?: number, 
+    paymentCurrency?: string
   ): Promise<boolean | string> => {
     try {
       const res = await fetch("/api/booking/payments", {
@@ -61,7 +65,7 @@ export const BookingService = {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ bookingId, paymentId }),
+        body: JSON.stringify({ bookingId, paymentId, paymentAmount, paymentCurrency }),
       });
       const data = await res.json();
       return res.status === 201 ? data.data : data.message;
@@ -70,4 +74,26 @@ export const BookingService = {
     }
     return false;
   },
+
+  getBookings: async ({filter, sortBy, pageNo}: IGetBookingRequestParams): Promise<IGetBookingsResponse> => {
+    try {
+      const queryParams = new URLSearchParams();
+    if (sortBy) queryParams.append("sortBy", sortBy);
+    if (filter?.status) queryParams.append("status", filter.status.toString());
+    if (pageNo) queryParams.append("page", pageNo.toString());
+
+    const url = `/api/booking?${queryParams.toString()}`;
+      const res = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (res.status === 200) return data;
+    } catch (error) {
+      console.error(error);
+    }
+    return {bookings: [], currentPage: 1, totalBookings: 0, totalPages: 0};
+  }
 };

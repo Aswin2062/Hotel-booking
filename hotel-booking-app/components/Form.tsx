@@ -15,13 +15,13 @@ interface HotelFormProps {
 
 const requiredFields: (keyof THotel)[] = [
   "hotel_name",
-  "hotel_formerly_name",
+
   "addressline1",
-  "addressline2",
+
   "city",
   "state",
   "country",
-  "url",
+
   "overview",
   "numberrooms",
 ];
@@ -61,27 +61,25 @@ const HotelForm = ({
 
       <div className="h-[80%] overflow-auto w-full max-w-md">
         {[
-          "brand_name",
           "hotel_name",
-          "hotel_formerly_name",
-          "hotel_translated_name",
+
           "addressline1",
           "addressline2",
           "zipcode",
           "city",
           "state",
           "country",
-          "countryisocode",
+
           "longitude",
           "latitude",
-          "url",
+
           "numberrooms",
           "overview",
-          "continent_name",
+
           "rates_currency",
         ].map((field) => (
           <div key={field} className="mb-2">
-            <label className="block text-gray-700 mb-1">
+            <label className="block text-gray-700 mb-1 capitalize">
               {field.replace(/_/g, " ")}
               {requiredFields.includes(field as keyof THotel) && (
                 <span className="text-red-500">*</span>

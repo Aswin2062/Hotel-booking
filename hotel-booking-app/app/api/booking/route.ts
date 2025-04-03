@@ -30,8 +30,12 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
+    const urlSearchParams = req.nextUrl.searchParams;
+    const statusFilter = urlSearchParams.get('status');
+    const sortBy = urlSearchParams.get('sortBy');
+    const pageNo = urlSearchParams.get('page');
     if (session?.userId) {
-      const response = await getBookings(session.userId!);
+      const response = await getBookings(session.userId!, sortBy, isNaN(Number(pageNo)) ? undefined : Number(pageNo) , statusFilter);
       return Response.json(response, { status: 200 });
     }
   } catch (e) {

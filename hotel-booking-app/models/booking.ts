@@ -8,7 +8,9 @@ export interface IBooking extends Document {
   hotel: mongoose.Schema.Types.ObjectId;
   allocatedRooms: mongoose.Schema.Types.ObjectId[];
   paymentStatus: PaymentStatus;
-  paymentId: string;
+  paymentId?: string;
+  paymentAmount?: number,
+  paymentCurrency?: string,
   numberOfGuests: number;
   checkin: Date;
   checkout: Date;
@@ -67,6 +69,8 @@ const roomBookingSchema = new Schema(
       default: PaymentStatus.Pending,
     },
     paymentId: { type: String },
+    paymentAmount: {type: Number},
+    paymentCurrency: {type: String},
     numberOfGuests: { type: Number, required: true },
     checkin: { type: Date, required: true },
     checkout: { type: Date, required: true },

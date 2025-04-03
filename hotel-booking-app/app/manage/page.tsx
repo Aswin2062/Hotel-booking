@@ -11,7 +11,7 @@ const EditDetails = () => {
   );
   const [editingHotel, setEditingHotel] = useState<THotel | null>(null);
   const [newHotel, setNewHotel] = useState<Partial<THotel>>({});
-  const [isAdding, setIsAdding] = useState(false);
+  const [isAdding, setIsAdding] = useState<boolean>(false);
   const [deleteHotelId, setDeleteHotelId] = useState<number | null>(null);
 
   const handleEdit = (hotel: THotel) => setEditingHotel(hotel);
