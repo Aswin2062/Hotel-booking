@@ -95,16 +95,16 @@ const EditDetails = () => {
 
       {(editingHotel || isAdding) && (
         <div className="fixed inset-0 bg-[#ffffff2e] bg-opacity-50 backdrop-blur-md flex justify-center items-center p-4">
-          <HotelForm
+          {/* <HotelForm
             isAdding={isAdding}
             newHotel={newHotel}
-            // editingHotel={editingHotel}
-            // setNewHotel={setNewHotel}
-            // setEditingHotel={setEditingHotel}
+            editingHotel={editingHotel}
+            setNewHotel={setNewHotel}
+            setEditingHotel={setEditingHotel}
             handleAddNewHotel={handleAddNewHotel}
             handleSaveEdit={handleSaveEdit}
             setIsAdding={setIsAdding}
-          />
+          /> */}
         </div>
       )}
 
