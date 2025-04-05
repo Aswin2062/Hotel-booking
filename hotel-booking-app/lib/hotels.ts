@@ -68,6 +68,10 @@ export async function getHotelsByStateAndCountry(
   return [];
 }
 
+export async function getHotels(): Promise<IHotelDao[]> {
+  return await HotelModel.find<IHotelDao>().sort({'updatedAt': -1});
+}
+
 function updateDiscount(hotels: IHotel[]): IHotelDao[] {
   return hotels.map((hotel) => {
     const hotelDao: IHotelDao = { ...hotel.toJSON() } as IHotelDao;

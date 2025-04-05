@@ -1,3 +1,5 @@
+import { IHotelDao } from "@/dao";
+
 export const HotelService = {
   getLocations: async () => {
     try {
@@ -46,4 +48,20 @@ export const HotelService = {
     }
     return [];
   },
+
+  getHotels: async ():Promise<IHotelDao[]> => {
+    try {
+      const res = await fetch(`/api/hotels`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+    return [];
+  }
 };

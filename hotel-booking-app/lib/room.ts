@@ -19,7 +19,7 @@ export async function addRoomsMasterData(): Promise<void> {
             new RoomModel({
               roomId: item.roomId,
               roomNo: item.roomNo,
-              type: RoomType.Deluxe,
+              type: item.type,
               hotel: hotelIdMap.get(item.hotelId),
             })
         )

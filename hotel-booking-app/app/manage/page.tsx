@@ -1,20 +1,18 @@
 "use client";
-import { useState } from "react";
-import { HotelJSON } from "@/components/reusable";
-import { THotel } from "@/dao";
+import { useEffect, useState } from "react";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import HotelForm from "../../components/Form";
+import { IHotelDao } from "@/dao";
+import { HotelService } from "@/services/HotelService";
 
 const EditDetails = () => {
-  const [hotels, setHotels] = useState<THotel[]>(
-    HotelJSON.map((hotel, index) => ({ ...hotel, hotel_id: index + 1 }))
-  );
-  const [editingHotel, setEditingHotel] = useState<THotel | null>(null);
-  const [newHotel, setNewHotel] = useState<Partial<THotel>>({});
+  const [hotels, setHotels] = useState<IHotelDao[]>([]);
+  const [editingHotel, setEditingHotel] = useState<IHotelDao | null>(null);
+  const [newHotel, setNewHotel] = useState<Partial<IHotelDao>>({});
   const [isAdding, setIsAdding] = useState<boolean>(false);
   const [deleteHotelId, setDeleteHotelId] = useState<number | null>(null);
 
-  const handleEdit = (hotel: THotel) => setEditingHotel(hotel);
+  const handleEdit = (hotel: IHotelDao) => setEditingHotel(hotel);
 
   const handleSaveEdit = () => {
     if (!editingHotel) return;
@@ -29,7 +27,7 @@ const EditDetails = () => {
   const handleAddNewHotel = () => {
     if (!newHotel.hotel_name || !newHotel.city) return;
     const newId = Date.now() + Math.floor(Math.random() * 1000);
-    setHotels([...hotels, { ...newHotel, hotel_id: newId } as THotel]);
+    setHotels([...hotels, { ...newHotel, hotel_id: newId } as IHotelDao]);
     setIsAdding(false);
     setNewHotel({});
   };
@@ -40,6 +38,15 @@ const EditDetails = () => {
       setDeleteHotelId(null);
     }
   };
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      const response = await HotelService.getHotels();
+      setHotels(response);
+    };
+    fetchHotels();
+    return (() => setHotels([]));
+  }, [])
 
   return (
     <div className="p-4 md:p-6 max-w-7xl mx-auto">
@@ -60,7 +67,7 @@ const EditDetails = () => {
             className="border p-4 rounded-lg shadow-md bg-white"
           >
             <img
-              src={hotel.photo1}
+              src={hotel.photos[0]}
               alt={hotel.hotel_name}
               className="w-full h-40 object-cover rounded-md"
             />
@@ -91,9 +98,9 @@ const EditDetails = () => {
           <HotelForm
             isAdding={isAdding}
             newHotel={newHotel}
-            editingHotel={editingHotel}
-            setNewHotel={setNewHotel}
-            setEditingHotel={setEditingHotel}
+            // editingHotel={editingHotel}
+            // setNewHotel={setNewHotel}
+            // setEditingHotel={setEditingHotel}
             handleAddNewHotel={handleAddNewHotel}
             handleSaveEdit={handleSaveEdit}
             setIsAdding={setIsAdding}

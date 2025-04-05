@@ -62,7 +62,19 @@ export type THotel = {
   rating_average: number;
   rates_currency: string;
   discount?: number;
+
+  // Add these optional room types:
+  Standardroom?: number;
+  Deluxeroom?: number;
+  Suiteroom?: number;
+  Penthouseroom?: number;
+
+  Standardroom_price?: number;
+  Deluxeroom_price?: number;
+  Suiteroom_price?: number;
+  Penthouseroom_price?: number;
 };
+
 
 export interface IHotelDao extends IHotel {
   createdAt?: Date;
